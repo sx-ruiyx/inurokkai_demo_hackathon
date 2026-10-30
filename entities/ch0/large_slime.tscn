@@ -1,0 +1,71 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://be2hk4tdru8n1" path="res://entities/entity_base.gd" id="1_ebase"]
+[ext_resource type="Script" path="res://entities/ch0/large_slime_ai.gd" id="3_ai"]
+[ext_resource type="Resource" path="res://data/entities/ch0/large_slime.tres" id="2_edata"]
+[ext_resource type="Texture2D" uid="uid://dqqcval1343bk" path="res://assets/textures/entities/shared/large_slime/idle_001.png" id="1_f0"]
+[ext_resource type="Texture2D" uid="uid://bf3vdenx7xiwv" path="res://assets/textures/entities/shared/large_slime/idle_002.png" id="1_f1"]
+[ext_resource type="Texture2D" uid="uid://bn4hmwfpefsgi" path="res://assets/textures/entities/shared/large_slime/idle_003.png" id="1_f2"]
+[ext_resource type="Texture2D" uid="uid://du32yupy2koyt" path="res://assets/textures/entities/shared/large_slime/idle_004.png" id="1_f3"]
+[ext_resource type="Texture2D" uid="uid://bfs4v2wwhh40y" path="res://assets/textures/entities/shared/large_slime/idle_005.png" id="1_f4"]
+[ext_resource type="Texture2D" uid="uid://dqo165g1retcr" path="res://assets/textures/entities/shared/large_slime/idle_006.png" id="1_f5"]
+[ext_resource type="Texture2D" uid="uid://i262ub53bhli" path="res://assets/textures/entities/shared/large_slime/idle_007.png" id="1_f6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f6")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 48
+height = 84
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hit"]
+radius = 42
+height = 74
+
+[node name="LargeSlime" type="CharacterBody2D"]
+collision_layer = 4
+motion_mode = 1
+z_index = 5
+script = ExtResource("3_ai")
+data = ExtResource("2_edata")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2.8, 2.8)
+sprite_frames = SubResource("SpriteFrames_idle")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="ContactHitbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox"]
+shape = SubResource("CapsuleShape2D_hit")

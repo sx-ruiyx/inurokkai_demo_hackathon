@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cd1caqvrpxfxt"]
+
+[ext_resource type="Script" uid="uid://cphlv5ncy52sg" path="res://data/skill_data.gd" id="1_bvc1t"]
+
+[resource]
+script = ExtResource("1_bvc1t")
+card_name = "妙手回春"
+description = "保命的法术。"
+cost_bp = 2
+cooldown = 3.0
+heal_flat = 1
+heal_percent = 0.1
+metadata/_custom_type_script = "uid://cphlv5ncy52sg"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://chlaxmgxjyufc"]
+
+[ext_resource type="Script" uid="uid://cgphdo04g3fvf" path="res://data/equipment_data.gd" id="1_fy3ej"]
+
+[resource]
+script = ExtResource("1_fy3ej")
+equip_type = 4
+item_name = "磨刀石"
+description = "让你的刀更加锋利。"
+attack_bonus = 1
+metadata/_custom_type_script = "uid://cgphdo04g3fvf"

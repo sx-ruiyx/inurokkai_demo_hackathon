@@ -1,0 +1,17 @@
+| ch0/stage1 木屋 · 抽屉（一次性家具交互，可跳过）
+| 挂载：01_wooden_house.tscn -> Objects/Drawer（Area2D + InteractPanel）
+| 参数：action_type=PLAY_VN, prompt_text=[E] 翻找, require_interact=true, trigger_once=true
+| 叙事：此处获得初始武器 broken_sword（正式发放由装备系统负责，本剧本只负责叙事）
+
+char bkxy 白柯行以
+
+branch 0
+node 0
+	hide 0
+	bkxy 1 base
+	narrate 抽屉比看起来深。底层躺着一柄用布条缠着的短剑。
+	bkxy 「这是……我的东西吗。想不起来。」
+	narrate 剑身从中间断过，断口被磨平，缠着防滑的布条，握着恰好贴合掌心。
+	bkxy serious 「不太体面。但握着，让人安心。」
+	tip 获得 破旧的短剑
+	end

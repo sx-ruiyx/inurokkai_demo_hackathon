@@ -1,0 +1,21 @@
+| ch1/1-2 密林深处 · 开场（进关一次性播放）
+| 挂载：03_forest_deep.tscn -> StageController.intro_script_path
+| 内容：穿过森林初遇的战场，深入密林；荆棘缠绕的痕迹第一次出现
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	narrate 越过吞碑者倒下的地方，林子的光变了一种颜色——更暗，更绿，像沉在水底。
+	bkxy 1 base
+	reed 2 serious
+	reed 「从这里开始，就是密林深处了。路只有一条，闭上眼都能走。」
+	bkxy 「你走过很多次？」
+	reed sigh 「走过……也看别人走过。能走到头的不多。」
+	narrate 树干上缠着带刺的藤，刺尖泛着不正常的青色。有什么东西在藤蔓深处缓慢地呼吸。
+	reed serious 「荆棘史莱姆。森林的免疫系统——它认生，见谁蛰谁。」
+	bkxy serious 「那就让它认识一下我。」
+	tip 清空本区域敌人，封印之门便会开启
+	end

@@ -1,0 +1,440 @@
+[gd_scene format=3 uid="uid://bo3j8621w2qr1"]
+
+[ext_resource type="Script" uid="uid://883fpkuecggy" path="res://stages/stage_controller.gd" id="1_f4tdo"]
+[ext_resource type="Texture2D" uid="uid://bkw4mi6ny1wpi" path="res://assets/textures/tilesets/platforms/grass_long.png" id="1_rvuts"]
+[ext_resource type="Texture2D" uid="uid://b5ucnjelwtwnx" path="res://assets/textures/tilesets/grounds/grass.png" id="1_y7omh"]
+[ext_resource type="AudioStream" uid="uid://bhyjtoociwcfd" path="res://assets/audio/bgm/bgm_ai_tavern_calm.ogg" id="2_okk2h"]
+[ext_resource type="Texture2D" uid="uid://dc54aujdeg42n" path="res://assets/textures/tilesets/platforms/grass_right.png" id="3_upj2b"]
+[ext_resource type="Texture2D" uid="uid://ct6pur5sdrkjy" path="res://assets/textures/tilesets/parallax/ai_forest_far.png" id="4_memwp"]
+[ext_resource type="Texture2D" uid="uid://csfmbsi8rvxaj" path="res://assets/textures/tilesets/grounds/dirt.png" id="4_rcib1"]
+[ext_resource type="Texture2D" uid="uid://mp7v5v655ibe" path="res://assets/textures/tilesets/platforms/grass_left.png" id="4_yhog2"]
+[ext_resource type="Texture2D" uid="uid://ddc3xydkep88n" path="res://assets/textures/tilesets/parallax/ai_forest_mid.png" id="5_jb3qp"]
+[ext_resource type="Texture2D" uid="uid://c44svf12e6xh3" path="res://assets/textures/tilesets/parallax/ai_forest_near.png" id="6_okk2h"]
+[ext_resource type="Script" uid="uid://bacris2h6x6en" path="res://stages/player_spawnpoint.gd" id="6_upj2b"]
+[ext_resource type="Script" uid="uid://134e0dv1jqnr" path="res://stages/entity_spawner.gd" id="6_yhog2"]
+[ext_resource type="PackedScene" uid="uid://c4tq2v15jod3s" path="res://entities/ch0/training_dummy.tscn" id="7_yhog2"]
+[ext_resource type="PackedScene" uid="uid://b1yyr6w13k1ds" path="res://ui/ui_layer.tscn" id="9_psoe2"]
+[ext_resource type="Texture2D" uid="uid://csb8geao3kics" path="res://assets/textures/stages/ch0/02_forest_entrance/wooden_house.png" id="12_landl"]
+[ext_resource type="Script" uid="uid://b32tf3smpyte2" path="res://stages/stage_interact.gd" id="14_okk2h"]
+[ext_resource type="PackedScene" path="res://entities/ch0/beginner_slime.tscn" id="15_bslime"]
+[ext_resource type="PackedScene" path="res://entities/ch0/alpha_slime.tscn" id="16_aslime"]
+[ext_resource type="PackedScene" path="res://entities/ch0/large_slime.tscn" id="17_lslime"]
+[ext_resource type="Texture2D" uid="uid://xofep8r4euuq" path="res://assets/textures/objects/environments/stone.png" id="18_stone"]
+[ext_resource type="Script" path="res://stages/ch0/harvest_node.gd" id="19_harv"]
+[ext_resource type="Script" path="res://stages/ch0/treasure_chest.gd" id="20_chest"]
+[ext_resource type="Script" path="res://fx/day_night_overlay.gd" id="21_dn"]
+[ext_resource type="Script" path="res://stages/stage_goal.gd" id="22_goal"]
+[ext_resource type="Script" path="res://stages/shared/hidden_gate.gd" id="hg_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(4864, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_goal"]
+size = Vector2(100, 240)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_harvest"]
+size = Vector2(70, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chest"]
+size = Vector2(90, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5t4xt"]
+size = Vector2(128, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_upj2b"]
+size = Vector2(160, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yhog2"]
+size = Vector2(256, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iko4a"]
+size = Vector2(230.80002, 440)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vn300"]
+size = Vector2(300, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vn400"]
+size = Vector2(400, 400)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgate"]
+size = Vector2(110, 240)
+
+
+[node name="02_forest_entrance" type="Node2D" unique_id=378739757]
+script = ExtResource("1_f4tdo")
+limit_right = 4864
+limit_top = 256
+bgm_audio = ExtResource("2_okk2h")
+intro_script_path = "res://data/scripts/ch0/02_01.txt"
+
+[node name="Spawnpoint" type="Marker2D" parent="." unique_id=1831688100]
+visible = false
+position = Vector2(256, 832)
+script = ExtResource("6_upj2b")
+spawn_id = "0_02_start"
+is_default = true
+
+[node name="EntitySpawner" type="Node2D" parent="." unique_id=1448282185]
+position = Vector2(960, 704)
+script = ExtResource("6_yhog2")
+entity_scene = ExtResource("15_bslime")
+spawn_count = 3
+spawn_interval = 0.5
+spawn_radius = 120.0
+auto_spawn_on_ready = true
+
+[node name="Parallax" type="Node2D" parent="." unique_id=446525262]
+position = Vector2(1152, 384)
+scale = Vector2(0.67, 0.67)
+
+[node name="Far" type="Parallax2D" parent="Parallax" unique_id=671118731]
+scroll_scale = Vector2(0.2, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Far" unique_id=1639413234]
+texture = ExtResource("4_memwp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax/Far" unique_id=1262589944]
+position = Vector2(0, 931.34326)
+texture = ExtResource("4_memwp")
+flip_v = true
+
+[node name="Mid" type="Parallax2D" parent="Parallax" unique_id=278114790]
+scroll_scale = Vector2(0.5, 0)
+repeat_size = Vector2(1674, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid" unique_id=1008258251]
+texture = ExtResource("5_jb3qp")
+
+[node name="Near" type="Parallax2D" parent="Parallax" unique_id=2000900454]
+scroll_scale = Vector2(0.8, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Near" unique_id=682578939]
+texture = ExtResource("6_okk2h")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax/Near" unique_id=1747934875]
+position = Vector2(0, 931.34326)
+texture = ExtResource("6_okk2h")
+flip_v = true
+
+[node name="Border" type="Node2D" parent="." unique_id=2030841761]
+
+[node name="Ground" type="StaticBody2D" parent="Border" unique_id=1074063707]
+texture_repeat = 3
+position = Vector2(2432, 1000)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Border/Ground" unique_id=1920663097]
+texture_repeat = 3
+position = Vector2(8, -44)
+texture = ExtResource("1_y7omh")
+region_enabled = true
+region_rect = Rect2(0, 0, 5648, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Border/Ground" unique_id=270576288]
+texture_repeat = 3
+position = Vector2(8, 44)
+texture = ExtResource("4_rcib1")
+region_enabled = true
+region_rect = Rect2(0, -24, 5648, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Ground" unique_id=711131935]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Air" type="StaticBody2D" parent="Border" unique_id=1207016157]
+position = Vector2(-64, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air" unique_id=868865229]
+shape = SubResource("RectangleShape2D_5t4xt")
+
+[node name="Air2" type="StaticBody2D" parent="Border" unique_id=1545831465]
+position = Vector2(4928, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air2" unique_id=629469981]
+shape = SubResource("RectangleShape2D_5t4xt")
+
+[node name="Platforms" type="Node2D" parent="." unique_id=726389304]
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms" unique_id=1147321194]
+position = Vector2(720, 904)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="Platforms/Platform1" unique_id=763200650]
+position = Vector2(72, 0)
+texture = ExtResource("3_upj2b")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Platforms/Platform1" unique_id=508474208]
+position = Vector2(-72, 0)
+texture = ExtResource("4_yhog2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform1" unique_id=1396354865]
+texture_repeat = 2
+texture = ExtResource("1_rvuts")
+region_enabled = true
+region_rect = Rect2(0, 0, 112, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1" unique_id=411583213]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_upj2b")
+one_way_collision = true
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms" unique_id=1111957880]
+position = Vector2(912, 840)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="Platforms/Platform2" unique_id=630783690]
+position = Vector2(168, 0)
+texture = ExtResource("3_upj2b")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Platforms/Platform2" unique_id=1493185101]
+position = Vector2(-72, 0)
+texture = ExtResource("4_yhog2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Platforms/Platform2" unique_id=190868798]
+texture_repeat = 2
+position = Vector2(48, 0)
+texture = ExtResource("1_rvuts")
+region_enabled = true
+region_rect = Rect2(0, 0, 216, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2" unique_id=1562954994]
+position = Vector2(48, 4)
+shape = SubResource("RectangleShape2D_yhog2")
+one_way_collision = true
+
+[node name="Objects" type="Node2D" parent="." unique_id=1901054017]
+
+[node name="WoodenHouse" type="Area2D" parent="Objects" unique_id=1842600419]
+position = Vector2(64.00001, 664.00006)
+scale = Vector2(1.25, 1.25)
+collision_mask = 2
+script = ExtResource("14_okk2h")
+prompt_text = "[E]"
+action_type = 2
+target_stage_path = "uid://c2dmst0kq4ymw"
+target_spawn_id = "0_01_exit"
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/WoodenHouse" unique_id=585918198]
+position = Vector2(96, -40)
+texture = ExtResource("12_landl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/WoodenHouse" unique_id=589036213]
+position = Vector2(12.599991, 0)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_iko4a")
+
+[node name="SlimeNestVN" type="Area2D" parent="Objects"]
+position = Vector2(660, 800)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_okk2h")
+prompt_text = "[E] 前进"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/02_02.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SlimeNestVN"]
+shape = SubResource("RectangleShape2D_vn300")
+
+[node name="MossboneVN" type="Area2D" parent="Objects"]
+position = Vector2(1800, 800)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_okk2h")
+prompt_text = "[E] 前进"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/02_03.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/MossboneVN"]
+shape = SubResource("RectangleShape2D_vn400")
+
+[node name="SteleEaterVN" type="Area2D" parent="Objects"]
+position = Vector2(3000, 800)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_okk2h")
+prompt_text = "[E] 前进"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/02_04.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/SteleEaterVN"]
+shape = SubResource("RectangleShape2D_vn300")
+
+[node name="FinaleVN" type="Area2D" parent="Objects"]
+position = Vector2(4200, 800)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("14_okk2h")
+prompt_text = ""
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/02_05.txt"
+require_interact = false
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/FinaleVN"]
+shape = SubResource("RectangleShape2D_vn300")
+
+[node name="AlphaSlimeSpawner" type="Node2D" parent="."]
+position = Vector2(1850, 850)
+script = ExtResource("6_yhog2")
+entity_scene = ExtResource("16_aslime")
+spawn_count = 1
+spawn_radius = 0.0
+auto_spawn_on_ready = false
+
+[node name="LargeSlimeSpawner" type="Node2D" parent="."]
+position = Vector2(3050, 850)
+script = ExtResource("6_yhog2")
+entity_scene = ExtResource("17_lslime")
+spawn_count = 1
+spawn_radius = 0.0
+auto_spawn_on_ready = false
+
+[node name="SteleHalf" type="Sprite2D" parent="."]
+position = Vector2(1955, 808)
+scale = Vector2(3, 4)
+texture = ExtResource("18_stone")
+
+[node name="SteleFull" type="Sprite2D" parent="."]
+position = Vector2(4200, 680)
+scale = Vector2(5, 8)
+texture = ExtResource("18_stone")
+
+[node name="CanvasLayer" parent="." unique_id=225631125 instance=ExtResource("9_psoe2")]
+
+[node name="HarvestGrassA" type="Area2D" parent="Objects"]
+position = Vector2(480, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("19_harv")
+material_name = "草叶"
+prompt_text = "[E] 采集草叶"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/HarvestGrassA"]
+shape = SubResource("RectangleShape2D_harvest")
+
+[node name="HarvestGrassB" type="Area2D" parent="Objects"]
+position = Vector2(1450, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("19_harv")
+material_name = "草叶"
+prompt_text = "[E] 采集草叶"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/HarvestGrassB"]
+shape = SubResource("RectangleShape2D_harvest")
+
+[node name="HarvestOre" type="Area2D" parent="Objects"]
+position = Vector2(2650, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("19_harv")
+material_name = "矿砂"
+yield_min = 1
+yield_max = 2
+prompt_text = "[E] 挖掘矿砂"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/HarvestOre"]
+shape = SubResource("RectangleShape2D_harvest")
+
+[node name="ChestNest" type="Area2D" parent="Objects"]
+position = Vector2(1080, 706)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("20_chest")
+chest_id = "forest_nest_chest"
+gold_min = 15
+gold_max = 30
+material_pool = Array[String](["木料", "草叶"])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ChestNest"]
+shape = SubResource("RectangleShape2D_chest")
+
+[node name="ChestDeep" type="Area2D" parent="Objects"]
+position = Vector2(3350, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("20_chest")
+chest_id = "forest_deep_chest"
+gold_min = 30
+gold_max = 60
+material_pool = Array[String](["石料", "矿砂", "胶质团"])
+rare_chance = 0.4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ChestDeep"]
+shape = SubResource("RectangleShape2D_chest")
+
+[connection signal="interacted" from="Objects/MossboneVN" to="AlphaSlimeSpawner" method="spawn_entities"]
+[connection signal="interacted" from="Objects/SteleEaterVN" to="LargeSlimeSpawner" method="spawn_entities"]
+
+[node name="DayNightModulate" type="CanvasLayer" parent="."]
+layer = 90
+script = ExtResource("21_dn")
+
+[node name="ColorRect" type="ColorRect" parent="DayNightModulate"]
+mouse_filter = 2
+
+[node name="SpawnBack" type="Marker2D" parent="."]
+visible = false
+position = Vector2(4560, 832)
+script = ExtResource("6_upj2b")
+spawn_id = "ch1_1_back"
+
+[node name="StageGoal" type="Area2D" parent="Objects"]
+position = Vector2(4700, 780)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("22_goal")
+stage_id = "ch1_1"
+next_stage_path = "res://stages/ch1/03_forest_deep.tscn"
+require_clear = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StageGoal"]
+shape = SubResource("RectangleShape2D_goal")
+
+
+[node name="HiddenGateGrove" type="Area2D" parent="Objects"]
+position = Vector2(4650, 780)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("hg_script")
+prompt_text = "[E] 踏入神秘入口"
+target_stage_path = "res://stages/hidden/18_ancient_grove.tscn"
+target_spawn_id = "h1_grove_start"
+require_stages = Array[String](["ch1_1", "ch1_2", "ch1_3", "ch1_4", "ch1_5"])
+
+[node name="Pillar" type="ColorRect" parent="Objects/HiddenGateGrove"]
+offset_left = -22.0
+offset_top = -150.0
+offset_right = 22.0
+offset_bottom = 0.0
+color = Color(0.55, 0.35, 0.85, 0.9)
+mouse_filter = 2
+
+[node name="Cap" type="ColorRect" parent="Objects/HiddenGateGrove"]
+offset_left = -30.0
+offset_top = -166.0
+offset_right = 30.0
+offset_bottom = -150.0
+color = Color(0.95, 0.9, 1.0, 0.95)
+mouse_filter = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/HiddenGateGrove"]
+shape = SubResource("RectangleShape2D_hgate")
+
+[node name="SpawnHG1" type="Marker2D" parent="."]
+visible = false
+position = Vector2(4580, 830)
+script = ExtResource("6_upj2b")
+spawn_id = "h1_grove_back"

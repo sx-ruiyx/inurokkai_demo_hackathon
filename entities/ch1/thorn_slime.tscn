@@ -1,0 +1,100 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/shared/enemy_behaviors.gd" id="1_ebase"]
+[ext_resource type="Resource" path="res://data/entities/ch1/thorn_slime.tres" id="2_edata"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_001.png" id="1_f0"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_002.png" id="1_f1"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_003.png" id="1_f2"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_004.png" id="1_f3"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_005.png" id="1_f4"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_006.png" id="1_f5"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_007.png" id="1_f6"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_008.png" id="1_f7"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_009.png" id="1_f8"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_010.png" id="1_f9"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_011.png" id="1_f10"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_012.png" id="1_f11"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_013.png" id="1_f12"]
+[ext_resource type="Texture2D" path="res://assets/textures/entities/ch0/beginner_slime/crawl_014.png" id="1_f13"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_idle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f12")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_f13")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 22
+height = 30
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hit"]
+radius = 18
+height = 20
+
+[node name="ThornSlime" type="CharacterBody2D"]
+collision_layer = 4
+motion_mode = 1
+z_index = 5
+script = ExtResource("1_ebase")
+data = ExtResource("2_edata")
+behavior = &"charge"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.62, 0.78, 0.45, 1)
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_idle")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="ContactHitbox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox"]
+shape = SubResource("CapsuleShape2D_hit")

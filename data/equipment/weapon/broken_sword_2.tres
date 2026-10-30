@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://qtiy5olwbj2i"]
+
+[ext_resource type="Script" uid="uid://cgphdo04g3fvf" path="res://data/equipment_data.gd" id="1_kkh0s"]
+
+[resource]
+script = ExtResource("1_kkh0s")
+item_name = "锋利的破剑"
+attack_bonus = 3
+crit_rate_bonus = 0.15
+crit_damage_bonus = 0.5
+metadata/_custom_type_script = "uid://cgphdo04g3fvf"

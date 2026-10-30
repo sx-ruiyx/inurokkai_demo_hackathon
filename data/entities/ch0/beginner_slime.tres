@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "新手史莱姆"
+max_hp = 12
+defense = 0
+contact_damage = 2
+knockback_multiplier = 1.0
+exp_reward = 20
+drop_gold_min = 1
+drop_gold_max = 3
+drop_materials = Array[String](["胶质团"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

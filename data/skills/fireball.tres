@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://dcsfwxckjv856"]
+
+[ext_resource type="Script" uid="uid://cphlv5ncy52sg" path="res://data/skill_data.gd" id="1_lmdfx"]
+
+[resource]
+script = ExtResource("1_lmdfx")
+card_name = "火球术"
+description = "最基础的法术。"
+cooldown = 1.5
+damage_multiplier = 6.5
+metadata/_custom_type_script = "uid://cphlv5ncy52sg"

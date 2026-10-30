@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "流沙蛮兵"
+max_hp = 110
+defense = 2
+contact_damage = 7
+knockback_multiplier = 0.4
+exp_reward = 180
+drop_gold_min = 15
+drop_gold_max = 25
+drop_materials = Array[String](["沙晶", "赤金锭"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

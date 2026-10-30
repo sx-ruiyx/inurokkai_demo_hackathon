@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://by85enhtthxaa"]
+
+[ext_resource type="Script" uid="uid://cgphdo04g3fvf" path="res://data/equipment_data.gd" id="1_voqyp"]
+
+[resource]
+script = ExtResource("1_voqyp")
+item_name = "生锈的破剑"
+description = "你醒来的时候，它便已存在"
+attack_bonus = 2
+metadata/_custom_type_script = "uid://cgphdo04g3fvf"

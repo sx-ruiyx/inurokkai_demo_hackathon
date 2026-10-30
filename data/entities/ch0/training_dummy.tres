@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EntityData" format=3 uid="uid://cdm7jelyb1r84"]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_jmmgi"]
+
+[resource]
+script = ExtResource("1_jmmgi")
+entity_name = "训练用木桩"
+contact_damage = 0
+exp_reward = 5
+drop_gold_min = 0
+drop_gold_max = 1
+drop_materials = Array[String]([])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

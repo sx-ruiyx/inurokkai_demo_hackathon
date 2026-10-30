@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "荆棘之母"
+max_hp = 240
+defense = 2
+contact_damage = 7
+knockback_multiplier = 0.2
+exp_reward = 400
+drop_gold_min = 80
+drop_gold_max = 140
+drop_materials = Array[String](["青石", "苔核", "晶髓"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

@@ -1,0 +1,27 @@
+| ch0/stage2 森林 · 吞碑者（中 Boss 战前，一次性触发）
+| 挂载：02_forest_entrance.tscn -> 中 Boss 竞技场入口（约 x=3000）
+| 参数：action_type=PLAY_VN, require_interact=true, prompt_text=[E] 前进, trigger_once=true
+
+char bkxy 白柯行以
+char reed 里德
+char large_slime 吞碑者
+
+branch 0
+node 0
+	hide 0
+	bkxy 0 base
+	reed 2 base
+	whiteout 0
+	narrate 森林到这里断了。月光一样的微光从尽头洒下来，而光里坐着的，是一整座会呼吸的小山。
+	narrate 吞碑者。大史莱姆的躯体里嵌着碑石的棱角，每一次蠕动，都有碎屑般的符文从身上剥落。
+	whiteout _
+	large_slime 1 base
+	bkxy alert 「它把石碑……吃进身体里了？」
+	reed 「不是吃进去。是长在一起了。碎屑堆到极致，就会假装自己是碑。」
+	large_slime angry 「——轰。」
+	narrate 它甚至没有站起来的动作。只是蠕动了一下，嵌在躯体里的碑石棱角又挤出几分，碾得地面咔咔作响。
+	reed warn 「小心！它身上裹着碑的碎渣，碰到就是一身伤——」
+	tip 冲刺后接普攻，触发重击
+	bkxy serious 「这跟说好的不一样！说好的只是只大一点的史莱姆！」
+	reed 「计划总是赶不上碎屑……上吧！打崩它，石碑就能拿回来了！」
+	end

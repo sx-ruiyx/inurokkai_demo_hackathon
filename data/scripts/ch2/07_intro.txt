@@ -1,0 +1,25 @@
+| ch2/2-1 沙海之门 · 开场（第二章开幕，进关一次性播放）
+| 挂载：07_sand_gate.tscn -> StageController.intro_script_path
+| 内容：走出森林尽头，进入沙海；热浪、第一个沙漠敌人
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 1.0
+	narrate 森林在身后合拢的那一刻，声音消失了。眼前只剩一片被晒白的、无边无际的沙。
+	whiteout _
+	hide 0
+	bkxy 1 base
+	reed 2 serious
+	bkxy 「……树呢？」
+	reed sigh 「往前三千里都没有树。欢迎来到沙海——六座碑里，第二座的领地。」
+	narrate 风卷着沙粒擦过脚背，烫得像细小的火星。沙丘表面偶尔鼓起一个包，又悄悄平复。
+	reed serious 「沙珠。别看它们小，成群的时候连碑都要让路。」
+	bkxy serious 「那就一只一只敲碎。」
+	reed 「这个答案，第六次轮回里你每一次都说过。」
+	tip 第二章 · 沙海 · 采集沙晶与赤金锭可打造更高图纸装备
+	end

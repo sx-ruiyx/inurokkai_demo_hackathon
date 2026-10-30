@@ -1,0 +1,417 @@
+[gd_scene format=3 uid="uid://c2dmst0kq4ymw"]
+
+[ext_resource type="Script" uid="uid://883fpkuecggy" path="res://stages/stage_controller.gd" id="1_2p2j6"]
+[ext_resource type="Script" uid="uid://bacris2h6x6en" path="res://stages/player_spawnpoint.gd" id="3_136v8"]
+[ext_resource type="Texture2D" uid="uid://bw0mhslbx3prs" path="res://assets/textures/stages/ch0/01_wooden_house/border.png" id="4_2iw7d"]
+[ext_resource type="Texture2D" uid="uid://ct6pur5sdrkjy" path="res://assets/textures/tilesets/parallax/cabin_far.png" id="4_irjl1"]
+[ext_resource type="Texture2D" uid="uid://b61sfcwopfnoj" path="res://assets/textures/stages/ch0/01_wooden_house/door.png" id="5_3ierq"]
+[ext_resource type="Texture2D" uid="uid://bvh6dmidk5cvn" path="res://assets/textures/stages/ch0/01_wooden_house/bed.png" id="5_qk4cv"]
+[ext_resource type="Texture2D" uid="uid://ddc3xydkep88n" path="res://assets/textures/tilesets/parallax/cabin_mid.png" id="5_uakol"]
+[ext_resource type="Texture2D" uid="uid://b2nm1oi48vpik" path="res://assets/textures/stages/ch0/01_wooden_house/drawer.png" id="6_qk4cv"]
+[ext_resource type="Texture2D" uid="uid://c44svf12e6xh3" path="res://assets/textures/tilesets/parallax/cabin_near.png" id="6_wtqo8"]
+[ext_resource type="Texture2D" uid="uid://n7ni4c46b8tm" path="res://assets/textures/stages/ch0/01_wooden_house/clock_inserted.png" id="9_2p2j6"]
+[ext_resource type="Texture2D" uid="uid://b0sppuowrhgvb" path="res://assets/textures/stages/ch0/01_wooden_house/clock_taken.png" id="10_yukqe"]
+[ext_resource type="PackedScene" uid="uid://b1yyr6w13k1ds" path="res://ui/ui_layer.tscn" id="11_7cjoq"]
+[ext_resource type="Script" uid="uid://b32tf3smpyte2" path="res://stages/stage_interact.gd" id="11_136v8"]
+[ext_resource type="Script" path="res://stages/ch0/clock_taken_anim.gd" id="15_clkanim"]
+[ext_resource type="Script" path="res://stages/ch0/base_facility.gd" id="16_fac"]
+[ext_resource type="Script" path="res://fx/day_night_overlay.gd" id="17_dn"]
+[ext_resource type="Script" path="res://stages/expedition_stone.gd" id="18_exped"]
+[ext_resource type="Script" path="res://stages/shared/hidden_gate.gd" id="hg_script"]
+[ext_resource type="Script" path="res://stages/shared/reincarnation_mirror.gd" id="rm_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exped"]
+size = Vector2(100, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mirror"]
+size = Vector2(90, 130)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(2048, 136)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5t4xt"]
+size = Vector2(128, 1024)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qk4cv"]
+size = Vector2(128, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irjl1"]
+size = Vector2(32, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_136v8"]
+size = Vector2(16, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qd7y"]
+size = Vector2(112, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5t4xt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_2p2j6")
+}],
+"loop": 0,
+"name": &"inserted",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_yukqe")
+}],
+"loop": 1,
+"name": &"taken",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p2j6"]
+size = Vector2(60, 132)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2jte"]
+size = Vector2(51.199898, 230.39998)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bedarea"]
+size = Vector2(470, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drawerarea"]
+size = Vector2(280, 300)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clockarea"]
+size = Vector2(470, 400)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_forgearea"]
+size = Vector2(120, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_farmarea"]
+size = Vector2(220, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brewarea"]
+size = Vector2(120, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_savearea"]
+size = Vector2(170, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_allyarea"]
+size = Vector2(110, 110)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgate"]
+size = Vector2(110, 240)
+
+
+[node name="01_wooden_house" type="Node2D" unique_id=378739757]
+script = ExtResource("1_2p2j6")
+limit_right = 2048
+limit_top = 256
+intro_script_path = "res://data/scripts/ch0/01_01.txt"
+
+[node name="Spawnpoint" type="Marker2D" parent="." unique_id=1831688100]
+position = Vector2(448, 864)
+script = ExtResource("3_136v8")
+spawn_id = "0_01_entrance"
+is_default = true
+spawn_scale = 1.5
+
+[node name="Spawnpoint2" type="Marker2D" parent="." unique_id=1470113743]
+position = Vector2(1920, 864)
+script = ExtResource("3_136v8")
+spawn_id = "0_01_exit"
+spawn_scale = 1.5
+
+[node name="Parallax" type="Node2D" parent="." unique_id=2031230354]
+position = Vector2(1152, 384)
+scale = Vector2(0.67, 0.67)
+
+[node name="Far" type="Parallax2D" parent="Parallax" unique_id=980206976]
+scroll_scale = Vector2(0.2, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Far" unique_id=815595250]
+texture = ExtResource("4_irjl1")
+
+[node name="Mid" type="Parallax2D" parent="Parallax" unique_id=1439422891]
+scroll_scale = Vector2(0.5, 0)
+repeat_size = Vector2(1674, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid" unique_id=23007030]
+texture = ExtResource("5_uakol")
+
+[node name="Near" type="Parallax2D" parent="Parallax" unique_id=1244052313]
+scroll_scale = Vector2(0.8, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Near" unique_id=385042548]
+texture = ExtResource("6_wtqo8")
+
+[node name="Border" type="Node2D" parent="." unique_id=2030841761]
+
+[node name="Sprite2D" type="Sprite2D" parent="Border" unique_id=1662288395]
+position = Vector2(1024, 800)
+scale = Vector2(2, 2)
+texture = ExtResource("4_2iw7d")
+
+[node name="Ground" type="StaticBody2D" parent="Border" unique_id=1074063707]
+texture_repeat = 3
+position = Vector2(1024, 1000)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Ground" unique_id=711131935]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Air" type="StaticBody2D" parent="Border" unique_id=1207016157]
+position = Vector2(-64, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air" unique_id=868865229]
+shape = SubResource("RectangleShape2D_5t4xt")
+
+[node name="Air2" type="StaticBody2D" parent="Border" unique_id=1545831465]
+position = Vector2(2080, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air2" unique_id=629469981]
+shape = SubResource("RectangleShape2D_5t4xt")
+
+[node name="Blank1" type="ColorRect" parent="Border" unique_id=1093425609]
+offset_right = 2048.0
+offset_bottom = 544.0
+color = Color(0.19607843, 0.18039216, 0.13725491, 1)
+
+[node name="Blank2" type="ColorRect" parent="Border" unique_id=56574808]
+offset_left = 2032.0
+offset_top = 544.0
+offset_right = 2048.0
+offset_bottom = 688.0
+color = Color(0.19607843, 0.18039216, 0.13725491, 1)
+
+[node name="Objects" type="Node2D" parent="." unique_id=1872322303]
+
+[node name="Bed" type="StaticBody2D" parent="Objects" unique_id=753995193]
+position = Vector2(152.00002, 872)
+scale = Vector2(1.75, 1.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Bed" unique_id=1907933677]
+position = Vector2(424, -32)
+texture = ExtResource("5_qk4cv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Bed" unique_id=1995050237]
+position = Vector2(8, 16)
+shape = SubResource("RectangleShape2D_qk4cv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Objects/Bed" unique_id=389301981]
+position = Vector2(-72, 0)
+shape = SubResource("RectangleShape2D_irjl1")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Objects/Bed" unique_id=1057472517]
+position = Vector2(80, 0)
+shape = SubResource("RectangleShape2D_136v8")
+
+[node name="Drawer" type="StaticBody2D" parent="Objects" unique_id=911598383]
+position = Vector2(1024, 872)
+scale = Vector2(1.75, 1.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objects/Drawer" unique_id=1826128593]
+position = Vector2(0, -32)
+texture = ExtResource("6_qk4cv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Drawer" unique_id=1278804204]
+shape = SubResource("RectangleShape2D_3qd7y")
+one_way_collision = true
+
+[node name="Clock" type="StaticBody2D" parent="Objects" unique_id=2131826152]
+position = Vector2(1568, 816)
+scale = Vector2(1.75, 1.75)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Objects/Clock" unique_id=1417529661]
+position = Vector2(-248, 0)
+sprite_frames = SubResource("SpriteFrames_5t4xt")
+animation = &"inserted"
+script = ExtResource("15_clkanim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Clock" unique_id=1289852330]
+position = Vector2(-2, 0)
+shape = SubResource("RectangleShape2D_2p2j6")
+one_way_collision = true
+
+[node name="Door" type="Area2D" parent="." unique_id=225707563]
+position = Vector2(2032, 816)
+scale = Vector2(1.25, 1.25)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("11_136v8")
+prompt_text = "[E] 出门"
+action_type = 2
+target_stage_path = "uid://bo3j8621w2qr1"
+target_spawn_id = "0_02_start"
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=17893159]
+position = Vector2(-499.2, 25.6)
+texture = ExtResource("5_3ierq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=1152917412]
+position = Vector2(-12.799805, 0)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_o2jte")
+
+[node name="BedInteract" type="Area2D" parent="Objects"]
+position = Vector2(185, 850)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("11_136v8")
+prompt_text = "[E] 查看"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/01_02_bed.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/BedInteract"]
+shape = SubResource("RectangleShape2D_bedarea")
+
+[node name="DrawerInteract" type="Area2D" parent="Objects"]
+position = Vector2(1024, 830)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("11_136v8")
+prompt_text = "[E] 翻找"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/01_02_drawer.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/DrawerInteract"]
+shape = SubResource("RectangleShape2D_drawerarea")
+
+[node name="ClockInteract" type="Area2D" parent="Objects"]
+position = Vector2(1415, 800)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("11_136v8")
+prompt_text = "[E] 取走钟"
+action_type = 1
+vn_script_path = "res://data/scripts/ch0/01_02_clock.txt"
+require_interact = true
+trigger_once = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ClockInteract"]
+shape = SubResource("RectangleShape2D_clockarea")
+
+[node name="Forge" type="Area2D" parent="Objects"]
+position = Vector2(620, 880)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_fac")
+facility_type = "forge"
+prompt_text = "[E] 锻造台"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Forge"]
+shape = SubResource("RectangleShape2D_forgearea")
+
+[node name="Farm" type="Area2D" parent="Objects"]
+position = Vector2(1250, 965)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_fac")
+facility_type = "farm"
+prompt_text = "[E] 菜地"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Farm"]
+shape = SubResource("RectangleShape2D_farmarea")
+
+[node name="Brew" type="Area2D" parent="Objects"]
+position = Vector2(1780, 880)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_fac")
+facility_type = "brew"
+prompt_text = "[E] 酿造台"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Brew"]
+shape = SubResource("RectangleShape2D_brewarea")
+
+[node name="BedSave" type="Area2D" parent="Objects"]
+position = Vector2(430, 880)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_fac")
+facility_type = "save"
+prompt_text = "[E] 卧室（存档）"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/BedSave"]
+shape = SubResource("RectangleShape2D_savearea")
+
+[node name="AllyStone" type="Area2D" parent="Objects"]
+position = Vector2(1450, 900)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("16_fac")
+facility_type = "ally"
+prompt_text = "[E] 盟约石碑"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/AllyStone"]
+shape = SubResource("RectangleShape2D_allyarea")
+
+[node name="CanvasLayer" parent="." unique_id=225631125 instance=ExtResource("11_7cjoq")]
+
+[connection signal="interacted" from="Objects/ClockInteract" to="Objects/Clock/AnimatedSprite2D" method="_on_clock_interacted"]
+
+[node name="DayNightModulate" type="CanvasLayer" parent="."]
+layer = 90
+script = ExtResource("17_dn")
+
+[node name="ColorRect" type="ColorRect" parent="DayNightModulate"]
+mouse_filter = 2
+
+[node name="ExpeditionStone" type="Area2D" parent="Objects"]
+position = Vector2(1850, 850)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("18_exped")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ExpeditionStone"]
+shape = SubResource("RectangleShape2D_exped")
+
+[node name="ReincarnationMirror" type="Area2D" parent="Objects"]
+position = Vector2(1620, 870)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("rm_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ReincarnationMirror"]
+shape = SubResource("RectangleShape2D_mirror")
+
+
+[node name="HiddenGateEcho" type="Area2D" parent="Objects"]
+position = Vector2(2100, 850)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("hg_script")
+prompt_text = "[E] 踏入神秘入口"
+target_stage_path = "res://stages/hidden/19_echo_chamber.tscn"
+target_spawn_id = "h2_echo_start"
+require_stages = Array[String](["ch1_1", "ch1_2", "ch1_3", "ch1_4", "ch1_5", "ch2_1", "ch2_2", "ch2_3", "ch2_4", "ch2_5", "ch3_1", "ch3_2", "ch3_3", "ch3_4", "ch3_5"])
+
+[node name="Pillar" type="ColorRect" parent="Objects/HiddenGateEcho"]
+offset_left = -22.0
+offset_top = -150.0
+offset_right = 22.0
+offset_bottom = 0.0
+color = Color(0.35, 0.25, 0.75, 0.9)
+mouse_filter = 2
+
+[node name="Cap" type="ColorRect" parent="Objects/HiddenGateEcho"]
+offset_left = -30.0
+offset_top = -166.0
+offset_right = 30.0
+offset_bottom = -150.0
+color = Color(0.95, 0.9, 1.0, 0.95)
+mouse_filter = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/HiddenGateEcho"]
+shape = SubResource("RectangleShape2D_hgate")
+
+[node name="SpawnHG2" type="Marker2D" parent="."]
+visible = false
+position = Vector2(2030, 880)
+script = ExtResource("3_136v8")
+spawn_id = "h2_echo_back"

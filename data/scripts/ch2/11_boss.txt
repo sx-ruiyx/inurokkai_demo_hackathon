@@ -1,0 +1,19 @@
+| ch2/2-5 沙暴之核 · Boss 登场（进关一次性播放，战前演出）
+| 挂载：11_sand_boss.tscn -> StageController.intro_script_path
+| Boss：沙暴之核
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	narrate 绿洲只剩一汪死水。水面对岸，整座沙丘在缓缓立起来——那不是沙丘，是披着沙的东西。
+	bkxy 1 base
+	reed 2 serious
+	reed 「沙暴之核。第二座碑的守誓者，脾气和沙暴一样好。」
+	bkxy 「上一个守誓者教过我：守誓者认的是誓，不是人。」
+	reed serious 「所以它不会听你解释。动手吧——趁沙暴还没成型。」
+	narrate 狂风骤起，飞沙在半空凝成旋转的巨环。环心处，一颗暗金色的核心睁开眼睛。
+	tip Boss 战 · 沙暴之核 · 击败后通往霜峰的路开启
+	end

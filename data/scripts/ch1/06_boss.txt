@@ -1,0 +1,24 @@
+| ch1/1-5 森林之心 · Boss 登场（进关一次性播放，战前演出）
+| 挂载：06_forest_heart.tscn -> StageController.intro_script_path
+| Boss：荆棘之母（清怪门解封条件含 Boss）
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 0.8
+	narrate 森林的最深处没有树，只有一座由荆棘盘成的巨茧，悬在半空，缓缓起伏。
+	whiteout _
+	hide 0
+	bkxy 1 base
+	reed 2 serious
+	reed 「到了。森林之心——也是森林的伤口。」
+	reed serious 「所有的荆棘都是从这里长出去的。它不恨你，它只是……不想再被忘记一次。」
+	bkxy serious 「第六次轮回。我记得每一次荆棘合拢的声音。」
+	narrate 巨茧裂开一线，无数刺藤如脉搏般收缩。中心露出一只巨大的、长满荆棘的核心，缓缓睁开。
+	reed 「小心！它醒了！」
+	tip Boss 战 · 荆棘之母 · 清空全部敌人后封印之门开启
+	end

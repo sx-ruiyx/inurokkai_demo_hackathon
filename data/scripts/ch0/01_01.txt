@@ -1,0 +1,25 @@
+| ch0/stage1 木屋之醒（关卡 Intro，只播一次）
+| 挂载：01_wooden_house.tscn 根节点 -> Intro Script Path
+| 触发：进场自动播放（played_intro_scripts 自动去重）
+| 演出：白场入 -> 标题卡 -> 异样感 -> 停钟伏笔 -> 交还控制权
+
+char bkxy 白柯行以
+
+branch 0
+node 0
+	whiteout 0
+	title 序章 · 木屋之醒
+	hide 0
+	bkxy 1 base
+	narrate 白光退去之后，你最先找回的，是自己的名字。
+	narrate 陌生的床，陌生的天花板。木纹里嵌着几十年日晒的味道，没有一缕属于你的记忆。
+	bkxy sad 「白柯行以……对，我是白柯行以。」
+	bkxy surprise 「除此之外，一片空白。」
+	narrate 你撑起身。屋子不大，陈设简单，却处处留着别人生活过的痕迹。
+	narrate 墙角立着一座停住的钟。指针指向一个说不清的时刻，像被谁按下了暂停。
+	bkxy serious 「钟停了……偏偏停在这种地方。」
+	narrate 门就在那儿。门外传来很远的风声，和某种更远的、不知名的动静。
+	bkxy serious 「留下来，或者走出去。好像没有第二个选项。」
+	whiteout _
+	tip 四处看看吧，也许能想起什么。门在右侧。
+	end

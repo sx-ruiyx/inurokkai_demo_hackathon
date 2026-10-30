@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dt8pdnk4fv50l"]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_na3j3"]
+
+[resource]
+script = ExtResource("1_na3j3")
+enemy_name = "带刺的木桩"
+max_hp = 100
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

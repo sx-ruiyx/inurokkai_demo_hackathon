@@ -1,0 +1,70 @@
+| ch3/终章（3-5 回响之冠击败后播放，一次性）
+| 挂载：16_peak_boss.tscn -> StageGoal.finale_script_path
+| 结构：branch0 王冠崩解 + 轮回真相 -> choice
+|       branch10 戴上王冠（守墓人结局）
+|       branch20 打碎王冠（破晓结局）
+| 注意：结尾 whiteout _ 收束；两条终路径都要显式 end
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 1.5
+	narrate 王冠停止转动。六道裂纹同时亮起，像六颗不肯闭上的眼睛。
+	whiteout _
+	hide 0
+	bkxy 1 serious
+	reed 2 serious
+	reed 「它记得所有轮回。每一次你都站在这里，每一次，你都差一点。」
+	bkxy 「差一点什么。」
+	reed 「差一点愿意把它交出来。」
+	narrate 王冠缓缓降下，悬在你头顶三尺。风声很远，像有人在门外等你。
+	bkxy serious 「前五世的我……都把记忆留在了这里，是吗。」
+	reed sigh 「所以每一次，你都得重新长大，重新忘掉，再重新走到山顶。」
+	reed 「它不是在关怪物。它是在替你保管，你不敢带下去的东西。」
+	narrate 冠冕内侧映出六段人生：木屋的床、森林的碑、沙漠的月、雪峰的风——全是你。
+	bkxy 「那这一次，我自己选。」
+
+	choice
+		1: 戴上王冠，取回六世记忆
+			goto 10 0
+		2: 打碎王冠，让轮回终结
+			goto 20 0
+
+branch 10
+node 0
+	whiteout 1
+	pause 1.2
+	hide 0
+	whiteout _
+	narrate 指尖触到冠冕的瞬间，六段人生涌了进来。你想起每一世的姓名，也想起每一次告别。
+	narrate 你成为新的守墓人。王冠留在虚空之间，等下一个迟到很久的人。
+	reed 2 base 「第六座石碑，会替你看门。」
+	bkxy 1 base 「那你呢。」
+	reed 「我？我就在门边。哪一扇都是。」
+	narrate 雪峰的山道上，多了一盏不灭的灯。后来的旅人说，灯下坐着一位黑犬与一位持冠人。
+	title 结局 · 守墓之人
+	tip 轮回仍在继续 · 感谢试玩
+	narrate 故事没有结束，只是换了一个人等。
+	end
+
+branch 20
+node 0
+	narrate 你举起剑。剑尖触到冠冕的一刻，它没有反抗——像终于等到了这一下。
+	whiteout 1
+	pause 1.0
+	hide 0
+	whiteout _
+	narrate 碎裂的声音，像一声叹了很久的气。六道裂纹化作流光，散进云海里。
+	narrate 你低头看手。没有王冠，没有铭文，只有一双普通的、会发抖的手。
+	bkxy 1 base 「天亮了。」
+	reed 2 base 「……亮了。第六次，是真的亮了。」
+	narrate 雪峰之下，森林、沙漠与群山铺到天边。没有门，没有碑，没有下一世。
+	narrate 你转身下山。这一次，路是向前的。
+	title 结局 · 破晓
+	tip 六回之末，天亮了 · 感谢试玩
+	narrate 风穿过空了的山顶，带走最后一声犬吠。那声音不像告别，像「走吧」。
+	end

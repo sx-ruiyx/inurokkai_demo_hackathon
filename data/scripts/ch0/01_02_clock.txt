@@ -1,0 +1,18 @@
+| ch0/stage1 木屋 · 停钟（一次性家具交互，可跳过）
+| 挂载：01_wooden_house.tscn -> Objects/Clock（Area2D + InteractPanel）
+| 参数：action_type=PLAY_VN, prompt_text=[E] 取走钟, require_interact=true, trigger_once=true
+| 伏笔：钟摆纹章 = 石碑碎片纹章（第五幕「苔骨」回收）
+
+char bkxy 白柯行以
+
+branch 0
+node 0
+	hide 0
+	bkxy 1 base
+	narrate 座钟停在正午与黄昏之间的某一刻，钟摆纹丝不动。
+	bkxy 「取走它吧。总觉得……该带着。」
+	narrate 指尖碰到钟摆的一瞬，你幻听了一声遥远的犬吠。
+	bkxy surprise 「——你听见了吗？」
+	narrate 屋里只有风。可掌心那枚小小的钟摆，分明烫了一下。
+	tip 获得 停住的钟
+	end

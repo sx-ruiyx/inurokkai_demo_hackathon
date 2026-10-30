@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "荆棘史莱姆"
+max_hp = 70
+defense = 2
+contact_damage = 5
+knockback_multiplier = 0.6
+exp_reward = 120
+drop_gold_min = 10
+drop_gold_max = 18
+drop_materials = Array[String](["草叶", "苔核", "青石"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

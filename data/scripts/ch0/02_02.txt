@@ -1,0 +1,40 @@
+| ch0/stage2 森林 · 首战前奏（一次性触发，巢穴教学）
+| 挂载：02_forest_entrance.tscn -> 巢穴前触发区（约 x=700）
+| 参数：action_type=PLAY_VN, require_interact=true, prompt_text=[E] 前进, trigger_once=true
+| 联动建议：巢穴 EntitySpawner 移至 x≈960，beginner_slime x3, spawn_radius=120, spawn_interval=0.5
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	bkxy 0 base
+	reed 2 base
+	narrate 林间的空地到了尽头，草地上布满粘液拖过的痕迹。
+	reed 「到了。三只，不多不少，刚够上课。」
+	bkxy 「课？我报过名吗？」
+	reed 「生存必修。学费已经交了——用你半条命。」
+
+	whiteout 0
+	narrate 胶质蠕动的声音从四面八方围上来。三只新手史莱姆从草浪里探出身子，安静地看着你们。
+	whiteout _
+
+	bkxy alert 「被包围了……它们比看上去快！」
+	reed 「现在，上课。第一课——」
+	tip A 或 D 移动 · Space 跳跃 · 鼠标左键 普攻
+	reed 「移动、起跳、挥剑。你的身体比你的记忆先学会打架，这倒是好消息。」
+	bkxy 「这算什么好消息……！」
+	tip 血条可见即为交战状态，脱战自动恢复
+	reed 「第二课，看那个发亮的条。BP，打牌的燃料，每 4 秒回一点。」
+	reed 「数字键打牌。火球术和治愈，自己挑时候。」
+	tip 数字键 1 / 2 打出卡牌技能
+	bkxy 「……火球还行，治愈也凑合。你确定这不是游戏菜单吗？」
+	reed sigh 「打完再吐槽。第三课——」
+	reed 「快速双击 A 或 D 冲刺，冲刺中挥剑，伤害更高。剩下的，挨两下就懂了。」
+	tip 双击 A 或 D 冲刺，冲刺中普攻 = 冲刺重击
+
+	whiteout _
+	narrate 史莱姆们失去了最后的耐心，第一颗黏液弹破空袭来。
+	bkxy serious 「要来真的了……上吧！」
+	end

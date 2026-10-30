@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "霜珠"
+max_hp = 90
+defense = 2
+contact_damage = 7
+knockback_multiplier = 0.8
+exp_reward = 160
+drop_gold_min = 12
+drop_gold_max = 22
+drop_materials = Array[String](["霜华", "晶髓"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

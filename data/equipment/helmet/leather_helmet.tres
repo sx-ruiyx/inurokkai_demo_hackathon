@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EquipmentData" format=3 uid="uid://cutr5rx14npyq"]
+
+[ext_resource type="Script" uid="uid://cgphdo04g3fvf" path="res://data/equipment_data.gd" id="1_p75bp"]
+
+[resource]
+script = ExtResource("1_p75bp")
+equip_type = 1
+item_name = "皮革头盔"
+description = "保护你的头。"
+shield_bonus = 1
+set_id = "leather"
+metadata/_custom_type_script = "uid://cgphdo04g3fvf"

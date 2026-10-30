@@ -1,0 +1,428 @@
+extends Control
+class_name UIHUD
+
+var manager
+var hp_fill: Control
+var bp_fill: Control
+var shield_fill: Control                   
+var hp_label: Label
+var bp_label: Label
+var shield_label: Label
+var bp_regen_label: Label 
+var burn_icon: Control
+var burn_text: Label
+var quick_bar: HBoxContainer
+var gold_label: Label
+var level_label: Label
+var slot_cd: Array[float] = [0.0, 0.0, 0.0, 0.0]
+
+var bars_root: Control
+var burn_root: VBoxContainer
+var pause_btn_node: Button
+var vn_mode: bool = false
+
+var hp_row_box: Control
+var shield_row_box: Control
+var bp_row_box: Control
+
+var is_burning: bool = false
+var last_hp: int = -1
+var last_shield: int = -1
+var last_bp: int = -1
+
+var _target_alpha := {"hp": 1.0, "shield": 1.0, "bp": 1.0}
+var _alpha_tweens := {"hp": null, "shield": null, "bp": null}
+
+const FADE_OUT_ALPHA := 0.3
+
+func bind_manager(m) -> void:
+	manager = m
+
+func set_burning(state: bool) -> void:
+	is_burning = state
+	if burn_icon: burn_icon.visible = is_burning
+	if burn_text: burn_text.visible = is_burning
+
+func set_vn_mode(is_vn: bool) -> void:
+	if vn_mode == is_vn: return
+	vn_mode = is_vn
+	if bars_root: bars_root.visible = not is_vn
+	if quick_bar: quick_bar.visible = not is_vn
+	if burn_root: burn_root.visible = not is_vn
+	if pause_btn_node: pause_btn_node.visible = true
+
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_build_game_hud()
+	_show_combat_guide_once()
+
+## v1.12 战斗操作教学：首次进入关卡显示，12 秒后淡出（存档去重）
+func _show_combat_guide_once() -> void:
+	if GameState.tutorial_seen.get("combat", false): return
+	var panel := Panel.new()
+	panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	panel.offset_left = -360.0; panel.offset_right = 360.0
+	panel.offset_top = -132.0; panel.offset_bottom = -28.0
+	panel.add_theme_stylebox_override("panel", manager._make_style(Color(0.10, 0.11, 0.15, 0.88), manager.COL_ACCENT, 2))
+	add_child(panel)
+
+	var vb := VBoxContainer.new()
+	vb.add_theme_constant_override("separation", 4)
+	vb.set_anchors_preset(Control.PRESET_FULL_RECT)
+	vb.offset_left = 16; vb.offset_right = -16
+	vb.offset_top = 10; vb.offset_bottom = -10
+	panel.add_child(vb)
+
+	var title := Label.new()
+	title.text = "⚔️ 战斗操作"
+	title.add_theme_color_override("font_color", manager.COL_ACCENT)
+	UITextBox.apply_basic(title, "bold", 18)
+	vb.add_child(title)
+
+	var lines := [
+		"A / D 移动 · Space 跳跃 · 空中 S 下蹲（落地冲击波）",
+		"J 攻击（轻按三连击；按住蓄力斩）· Shift 或双击 A/D 冲刺",
+		"冲刺中按 J = 冲刺攻击（高伤）· 1/2/3/4 释放技能（耗 BP）",
+		"C 背包（装备技能/武器）· E 交互 · Esc 暂停",
+	]
+	for s in lines:
+		var l := Label.new()
+		l.text = s
+		l.add_theme_color_override("font_color", manager.COL_TEXT)
+		UITextBox.apply_basic(l, "normal", 14)
+		vb.add_child(l)
+
+	var t := create_tween()
+	t.tween_interval(12.0)
+	t.tween_property(panel, "modulate:a", 0.0, 1.5)
+	t.tween_callback(func():
+		GameState.tutorial_seen["combat"] = true
+		panel.queue_free()
+	)
+
+func _build_game_hud() -> void:
+	var bars := Control.new()
+	bars.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# 【定位】贴紧最左侧，垂直方向偏上 (Y = 35%)
+	bars.anchor_left = 0.0
+	bars.anchor_right = 0.0
+	bars.anchor_top = 0.35
+	bars.anchor_bottom = 0.35
+	bars.offset_left = 0.0
+	bars.offset_top = 0.0
+	bars.offset_right = 0.0
+	bars.offset_bottom = 0.0
+	
+	add_child(bars)
+	bars_root = bars 
+
+	var hp_row := _make_hud_bar(bars, manager.COL_HP, "heart", 14, false, false)
+	hp_row_box = hp_row["row"]
+	hp_row_box.position = Vector2(0, 0)
+	hp_fill = hp_row["fill"]
+	hp_label = hp_row["num"]
+
+	var sh_row := _make_hud_bar(bars, manager.COL_SHIELD, "shield", 14, false, false)
+	shield_row_box = sh_row["row"]
+	shield_row_box.position = Vector2(0, 32) 
+	shield_fill = sh_row["fill"]
+	shield_label = sh_row["num"]
+
+	var bp_row := _make_hud_bar(bars, manager.COL_BP, "star", 14, false, true)
+	bp_row_box = bp_row["row"]
+	bp_row_box.position = Vector2(0, 64)
+	bp_fill = bp_row["fill"]
+	bp_label = bp_row["num"]
+
+	bp_regen_label = Label.new()
+	bp_regen_label.add_theme_color_override("font_color", Color(0.8, 0.9, 0.8))
+	UITextBox.apply_basic(bp_regen_label, "number", 12)
+	bp_regen_label.visible = false
+	bp_row_box.add_child(bp_regen_label)
+
+	# 【v1.1】金币 / 等级 / 经验 行
+	gold_label = Label.new()
+	gold_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.4))
+	gold_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	gold_label.add_theme_constant_override("outline_size", 3)
+	UITextBox.apply_basic(gold_label, "bold", 14)
+	gold_label.position = Vector2(0, 96)
+	bars.add_child(gold_label)
+
+	level_label = Label.new()
+	level_label.add_theme_color_override("font_color", Color(0.85, 0.95, 1.0))
+	level_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	level_label.add_theme_constant_override("outline_size", 3)
+	UITextBox.apply_basic(level_label, "bold", 14)
+	level_label.position = Vector2(0, 122)
+	bars.add_child(level_label)
+
+	var burn_box := VBoxContainer.new()
+	burn_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	burn_box.position = Vector2(manager.HUD_MARGIN + 300.0, manager.HUD_MARGIN + 12.0)
+	add_child(burn_box)
+	burn_root = burn_box 
+	
+	burn_icon = _make_status_icon(burn_box, manager.COL_BURN, "燃烧")
+	burn_text = Label.new()
+	burn_text.text = "燃烧"
+	burn_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	burn_text.add_theme_color_override("font_color", Color(1.0, 0.55, 0.45))
+	UITextBox.apply_basic(burn_text, "bold", 11)
+	burn_box.add_child(burn_text)
+
+	burn_icon.visible = false
+	burn_text.visible = false
+
+	var pause_side: float = manager.QUICK_SIZE.x * 0.8 
+	
+	var pause_bg = UITextBox.create_vertical_fade_bg(pause_side, pause_side, true)
+	pause_bg.anchor_left = 1.0; pause_bg.anchor_right = 1.0
+	pause_bg.offset_left = -manager.HUD_MARGIN - pause_side
+	pause_bg.offset_right = -manager.HUD_MARGIN
+	pause_bg.offset_top = 0 
+	pause_bg.offset_bottom = pause_side 
+	add_child(pause_bg)
+
+	var pause_btn := Button.new()
+	pause_btn.text = "‖"
+	pause_btn.custom_minimum_size = Vector2(pause_side, pause_side)
+	pause_btn.add_theme_color_override("font_color", manager.COL_TEXT)
+	pause_btn.add_theme_color_override("font_hover_color", manager.COL_ACCENT)
+	pause_btn.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+	pause_btn.add_theme_stylebox_override("hover", _make_style(Color(1,1,1,0.15), Color(0,0,0,0), 0))
+	pause_btn.anchor_left = 1.0; pause_btn.anchor_right = 1.0
+	pause_btn.offset_left = -manager.HUD_MARGIN - pause_side
+	pause_btn.offset_right = -manager.HUD_MARGIN
+	pause_btn.offset_top = 0 
+	pause_btn.offset_bottom = pause_side
+	UITextBox.apply_basic(pause_btn, "bold", 34)
+	pause_btn.pressed.connect(func(): manager._change_state(manager.State.PAUSE))
+	add_child(pause_btn)
+	pause_btn_node = pause_btn 
+
+	quick_bar = HBoxContainer.new()
+	quick_bar.add_theme_constant_override("separation", manager.QUICK_GAP)
+	quick_bar.anchor_left = 1.0; quick_bar.anchor_right = 1.0
+	quick_bar.anchor_top = 1.0; quick_bar.anchor_bottom = 1.0
+	quick_bar.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	quick_bar.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	quick_bar.offset_right = -manager.HUD_MARGIN
+	quick_bar.offset_left = -manager.HUD_MARGIN - manager.QUICK_SIZE.x * 4 - manager.QUICK_GAP * 3
+	quick_bar.offset_bottom = -pause_side * 0.8
+	quick_bar.offset_top = -pause_side * 0.8 - manager.QUICK_SIZE.y
+	quick_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(quick_bar)
+
+	for i in 4:
+		var slot := Panel.new()
+		slot.custom_minimum_size = manager.QUICK_SIZE
+		slot.mouse_filter = Control.MOUSE_FILTER_STOP
+		slot.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		slot.tooltip_text = "点击或按 %d 键释放该槽位卡牌" % (i + 1)
+		slot.add_theme_stylebox_override("panel", _make_style(Color(0.05, 0.05, 0.08, 0.62), Color(0.78, 0.80, 0.88, 0.65), 1))
+		slot.gui_input.connect(func(ev: InputEvent) -> void:
+			if ev is InputEventMouseButton:
+				var mb := ev as InputEventMouseButton
+				if mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT: use_card_slot(i))
+		quick_bar.add_child(slot)
+
+		var label := Label.new()
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		label.set_anchors_preset(Control.PRESET_FULL_RECT)
+		label.add_theme_color_override("font_color", manager.COL_TEXT)
+		UITextBox.apply_basic(label, "normal", 12)
+		slot.add_child(label)
+
+func _animate_alpha(key: String, row: Control, target: float) -> void:
+	if is_equal_approx(_target_alpha[key], target): return
+	_target_alpha[key] = target
+	
+	if _alpha_tweens[key] and _alpha_tweens[key].is_valid():
+		_alpha_tweens[key].kill()
+	
+	_alpha_tweens[key] = create_tween()
+	_alpha_tweens[key].tween_property(row, "modulate:a", target, 0.4).set_trans(Tween.TRANS_SINE)
+
+func _shake_row(row: Control) -> void:
+	var base_pos = Vector2(0, row.position.y)
+	if row.has_meta("is_shaking"): return
+	row.set_meta("is_shaking", true)
+	
+	var t = create_tween()
+	t.tween_property(row, "position", base_pos + Vector2(-15, 6), 0.03)
+	t.tween_property(row, "position", base_pos + Vector2(15, -6), 0.03)
+	t.tween_property(row, "position", base_pos + Vector2(-10, 4), 0.03)
+	t.tween_property(row, "position", base_pos + Vector2(10, -4), 0.03)
+	t.tween_property(row, "position", base_pos + Vector2(-4, 2), 0.03)
+	t.tween_property(row, "position", base_pos, 0.03)
+	t.tween_callback(func(): row.remove_meta("is_shaking"))
+
+func _push_row(row: Control) -> void:
+	var base_pos = Vector2(0, row.position.y)
+	if row.has_meta("is_shaking"): return
+	row.set_meta("is_shaking", true)
+	
+	var t = create_tween()
+	t.tween_property(row, "position", base_pos + Vector2(-15, 0), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	t.tween_property(row, "position", base_pos, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.tween_callback(func(): row.remove_meta("is_shaking"))
+
+func refresh_hud() -> void:
+	if last_hp == null or last_hp == -1:
+		last_hp = manager._hp
+		last_shield = manager._shield
+		last_bp = manager._bp
+
+	if manager._hp < last_hp: _shake_row(hp_row_box)
+	if manager._shield < last_shield: _shake_row(shield_row_box)
+	if manager._bp < last_bp: _push_row(bp_row_box)
+
+	last_hp = manager._hp
+	last_shield = manager._shield
+	last_bp = manager._bp
+
+	var is_combat = manager._combat_flag
+	var target_alpha = 1.0 if is_combat else FADE_OUT_ALPHA
+	
+	var final_hp_alpha = 0.4 if manager._hp <= 0 else target_alpha
+	var final_sh_alpha = 0.4 if manager._shield <= 0 else target_alpha
+	var final_bp_alpha = target_alpha
+
+	_animate_alpha("hp", hp_row_box, final_hp_alpha)
+	_animate_alpha("shield", shield_row_box, final_sh_alpha)
+	_animate_alpha("bp", bp_row_box, final_bp_alpha)
+
+	if hp_fill != null and hp_fill.has_method("update_health"):
+		hp_fill.update_health(manager._hp, manager._max_hp)
+
+	if shield_fill != null and shield_fill.has_method("update_health"):
+		shield_fill.update_health(manager._shield, manager._max_shield)
+
+	if bp_fill != null and bp_fill.has_method("update_health"):
+		bp_fill.update_health(manager._bp, manager._max_bp)
+		
+		if manager._bp < manager._max_bp and manager.game_state:
+			var progress = manager.game_state.bp_regen_progress
+			var target_ratio = (float(manager._bp) + progress) / float(manager._max_bp)
+			bp_fill.set_charge_ratio(target_ratio)
+			
+			if bp_regen_label:
+				bp_regen_label.visible = true
+				var time_left = manager.game_state.bp_regen_interval - manager.game_state.bp_regen_timer
+				bp_regen_label.text = "(-%.1fs)" % maxf(0.0, time_left)
+		else:
+			bp_fill.set_charge_ratio(0.0)
+			if bp_regen_label:
+				bp_regen_label.visible = false
+
+	if burn_icon != null: burn_icon.visible = is_burning
+	if burn_text != null: burn_text.visible = is_burning
+
+	# 【v1.1】金币 / 等级 / 经验
+	if gold_label != null:
+		gold_label.text = "$ %d" % int(manager.game_state.gold)
+	if level_label != null:
+		var gs = manager.game_state
+		if int(gs.current_level) >= int(gs.MAX_LEVEL):
+			level_label.text = "Lv.%d (MAX)" % int(gs.current_level)
+		else:
+			level_label.text = "Lv.%d  经验 %d/%d" % [int(gs.current_level), int(gs.exp), int(gs.exp_to_next())]
+
+	_refresh_quickbar()
+
+func _skill_slot_cards() -> Array:
+	if manager.bag_ui != null and manager.bag_ui.skill_slot_cards.size() == 4:
+		return manager.bag_ui.skill_slot_cards
+	return [-1, -1, -1, -1]
+
+func _refresh_quickbar() -> void:
+	if quick_bar == null: return
+	var slots: Array = _skill_slot_cards()
+	var all_cards: Array = manager._all_cards()
+	for i in 4:
+		var slot := quick_bar.get_child(i) as Panel
+		var label := slot.get_child(0) as Label
+		if slot_cd[i] > 0.0:
+			slot.modulate = Color(0.45, 0.45, 0.5, 1.0)
+			label.text = "冷却 %.1fs" % slot_cd[i]
+			continue
+		slot.modulate = Color(1, 1, 1, 1)
+		var idx: int = slots[i] if i < slots.size() else -1
+		if idx >= 0 and idx < all_cards.size():
+			var c: Dictionary = all_cards[idx]
+			label.text = "%s\nLv.%d %s" % [c["name"], c["level"], c["type"]]
+		else:
+			label.text = "（空槽位）"
+
+func use_card_slot(slot_index: int) -> void:
+	if slot_index < 0 or slot_index >= 4: return
+	if slot_cd[slot_index] > 0.0: return
+	var slots: Array = _skill_slot_cards()
+	if slot_index >= slots.size(): return
+	var idx: int = slots[slot_index]
+	if idx < 0 or idx >= manager._all_cards().size(): return
+	var c: Dictionary = manager._all_cards()[idx]
+
+	var player = get_tree().get_first_node_in_group("player")
+	if player == null or player.skills == null: return
+
+	var skill_id := ""
+	var res = c.get("res")
+	if res is SkillData:
+		skill_id = str(res.skill_id)
+	if skill_id == "":
+		skill_id = str(c.get("base_id", ""))
+
+	var success: bool = player.skills.cast_skill(skill_id)
+	if not success:
+		return
+
+	slot_cd[slot_index] = manager.SLOT_CD_TIME
+	_refresh_quickbar()
+
+func tick_slot_cooldown(delta: float) -> void:
+	var any_active := false
+	for i in 4:
+		if slot_cd[i] > 0.0:
+			slot_cd[i] = maxf(0.0, slot_cd[i] - delta)
+			any_active = true
+			if is_zero_approx(slot_cd[i]): slot_cd[i] = 0.0
+	if any_active: _refresh_quickbar()
+
+func _make_hud_bar(parent: Control, fill_color: Color, icon_type: String, font_size: int, delay: bool, charge: bool) -> Dictionary:
+	var track = HealthBar.new()
+	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	track.setup(fill_color == manager.COL_SHIELD, fill_color, delay, charge, icon_type, font_size, 10.0)
+	# 【核心修改】宽度缩短一半
+	track.custom_minimum_size = Vector2(manager.BAR_SIZE.x * 0.5, manager.BAR_SIZE.y)
+	parent.add_child(track)
+	
+	return {"fill": track, "num": track.num_label, "row": track}
+
+func _make_texture_icon(path: String, fallback: Control) -> Control:
+	if not FileAccess.file_exists(path): return fallback
+	var tex: Texture2D = load(path)
+	if tex == null: return fallback
+	var t := TextureRect.new()
+	t.texture = tex
+	t.custom_minimum_size = Vector2(20, 20)
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	return t
+
+func _make_status_icon(parent: Control, color: Color, _tip: String) -> Panel:
+	var icon := Panel.new()
+	icon.custom_minimum_size = Vector2(24, 24)
+	icon.add_theme_stylebox_override("panel", _make_style(color, color.darkened(0.4), 1))
+	parent.add_child(icon)
+	return icon
+
+func _make_style(bg: Color, border: Color, bw: int, radius: int = 6) -> StyleBoxFlat:
+	var st := StyleBoxFlat.new()
+	st.bg_color = bg; st.border_color = border
+	st.set_border_width_all(bw); st.set_corner_radius_all(radius)
+	st.shadow_color = Color(0, 0, 0, 0.18); st.shadow_size = 5; st.shadow_offset = Vector2(0, 2)
+	return st

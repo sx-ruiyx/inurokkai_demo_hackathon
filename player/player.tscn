@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://bd07lxdewcc4m"]
+
+[ext_resource type="Script" uid="uid://dptgo2agmli8h" path="res://player/player.gd" id="1_qjkh3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0xm2m"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2yge"]
+radius = 24.0
+height = 164.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hit_blue"]
+radius = 170.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o2jte"]
+radius = 16.0
+height = 80.0
+
+[node name="Player" type="CharacterBody2D" unique_id=67335453]
+z_index = 10
+collision_layer = 2
+script = ExtResource("1_qjkh3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1523078179]
+sprite_frames = SubResource("SpriteFrames_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=786432575]
+position = Vector2(16, 0)
+shape = SubResource("CapsuleShape2D_h2yge")
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=927881770]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=71410970]
+position = Vector2(0, -100)
+shape = SubResource("CircleShape2D_hit_blue")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=778636540 groups=["player_hurtbox"]]
+position = Vector2(16, 0)
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=531795917]
+shape = SubResource("CapsuleShape2D_o2jte")

@@ -1,0 +1,26 @@
+| ch3/3-5 回响之冠 · 最终 Boss 登场（进关一次性播放，战前演出）
+| 挂载：16_peak_boss.tscn -> StageController.intro_script_path
+| Boss：回响之冠
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 1.5
+	narrate 山顶没有雪，只有一片被挖空的夜。夜的中央悬着一顶王冠，安静地等了很久。
+	whiteout _
+	hide 0
+	bkxy 1 base
+	reed 2 serious
+	reed 「回响之冠。六次轮回里，你到过这里五次。」
+	bkxy 「第五次的时候，我赢了吗。」
+	reed sigh 「你到过这里五次。这句话我已经说完了。」
+	narrate 王冠缓缓转动，每一道转过的光里都映着一场没打完的战斗。
+	bkxy serious 「那第六次，换个结局。」
+	reed serious 「去吧。这一次，我看着。」
+	title 第三章 · 回响 · 终
+	tip 最终 Boss 战 · 回响之冠 · 通关后回到营地
+	end

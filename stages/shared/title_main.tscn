@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://wuenu3x368wv"]
+
+[ext_resource type="Script" uid="uid://coj5ylone274y" path="res://stages/shared/title_main.gd" id="1_s6506"]
+[ext_resource type="Texture2D" uid="uid://dkls0mpg7asui" path="res://assets/textures/tilesets/parallax/ai_peak_far.png" id="2_8f8e4"]
+[ext_resource type="AudioStream" uid="uid://c7p703ppwbjui" path="res://assets/audio/bgm/bgm_ai_japanese_piano.ogg" id="2_bjfdf"]
+[ext_resource type="Texture2D" uid="uid://ds3dkhmgcyn3o" path="res://assets/textures/tilesets/parallax/ai_peak_mid.png" id="3_bjfdf"]
+[ext_resource type="Texture2D" uid="uid://dso1vo2ifc0pj" path="res://assets/textures/tilesets/parallax/ai_peak_near.png" id="4_87w7q"]
+[ext_resource type="Texture2D" uid="uid://b5ucnjelwtwnx" path="res://assets/textures/tilesets/grounds/grass.png" id="5_m6s7c"]
+[ext_resource type="Texture2D" uid="uid://csfmbsi8rvxaj" path="res://assets/textures/tilesets/grounds/dirt.png" id="6_f5043"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7584i"]
+size = Vector2(1536, 160.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_memm2"]
+size = Vector2(128, 1088)
+
+[node name="MainTitle" type="Node2D" unique_id=1537669515]
+script = ExtResource("1_s6506")
+bgm_audio = ExtResource("2_bjfdf")
+bgm_volume_db = 0.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1244439396]
+position = Vector2(768, 640)
+zoom = Vector2(0.75, 0.75)
+
+[node name="Parallax" type="Node2D" parent="." unique_id=2077068566]
+position = Vector2(768, 264)
+
+[node name="Far" type="Parallax2D" parent="Parallax" unique_id=830421519]
+scroll_scale = Vector2(0.2, 0)
+repeat_size = Vector2(2092, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Far" unique_id=1576972847]
+texture = ExtResource("2_8f8e4")
+
+[node name="Mid" type="Parallax2D" parent="Parallax" unique_id=1490287200]
+scroll_scale = Vector2(0.5, 0)
+scroll_offset = Vector2(0, 216)
+repeat_size = Vector2(1651, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid" unique_id=1645698571]
+texture = ExtResource("3_bjfdf")
+
+[node name="Near" type="Parallax2D" parent="Parallax" unique_id=535521808]
+scroll_scale = Vector2(0.8, 0)
+scroll_offset = Vector2(0, 256)
+repeat_size = Vector2(1639, 0)
+repeat_times = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Near" unique_id=328215174]
+texture = ExtResource("4_87w7q")
+
+[node name="Border" type="Node2D" parent="." unique_id=1078242757]
+
+[node name="Ground" type="StaticBody2D" parent="Border" unique_id=113665278]
+texture_repeat = 3
+position = Vector2(768, 1016)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Border/Ground" unique_id=605558797]
+texture_repeat = 3
+position = Vector2(0, -56)
+texture = ExtResource("5_m6s7c")
+region_enabled = true
+region_rect = Rect2(0, 0, 2092, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Border/Ground" unique_id=749791921]
+texture_repeat = 3
+position = Vector2(0, 24)
+texture = ExtResource("6_f5043")
+region_enabled = true
+region_rect = Rect2(0, -24, 2092, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Ground" unique_id=1961492858]
+position = Vector2(0, -0.125)
+shape = SubResource("RectangleShape2D_7584i")
+
+[node name="Air" type="StaticBody2D" parent="Border" unique_id=1736607630]
+position = Vector2(-64, 544)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air" unique_id=1492177667]
+shape = SubResource("RectangleShape2D_memm2")
+
+[node name="Air2" type="StaticBody2D" parent="Border" unique_id=897122392]
+position = Vector2(1600, 544)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air2" unique_id=710185967]
+shape = SubResource("RectangleShape2D_memm2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1951834203]

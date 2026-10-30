@@ -1,0 +1,25 @@
+| ch3/3-1 霜峰山道 · 开场（第三章开幕，进关一次性播放）
+| 挂载：12_peak_ascent.tscn -> StageController.intro_script_path
+| 内容：翻越沙海尽头，登上终年风雪的霜峰
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 1.2
+	narrate 沙海的尽头是一面拔地而起的雪墙。踏上去的第一步，暑气就死了。
+	whiteout _
+	hide 0
+	bkxy 1 base
+	reed 2 serious
+	bkxy 「好冷。这里的天比别处高。」
+	reed 「霜峰。离碑最近的地方——五座碑的回声都在风里。」
+	narrate 雪地上没有脚印，只有一片一片安静的冰晶，像被冻住的心跳。
+	reed serious 「霜珠是化了冰的回声，别徒手碰。虚空游灵……尽量别对视。」
+	bkxy serious 「第三座碑就在上面？」
+	reed sigh 「在上面。也在别的上面。爬吧，趁你还记得要爬。」
+	tip 第三章 · 霜峰 · 星灵矿脉需要精金镌以上工具
+	end

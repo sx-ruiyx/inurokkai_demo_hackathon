@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://c7ypanw3gmrfr"]
+
+[ext_resource type="Script" uid="uid://dyjlr81rguxws" path="res://vfx/skills/vfx_fireball.gd" id="1_p4cjx"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/fly_0.png" id="2_f0"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/fly_1.png" id="3_f1"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/fly_2.png" id="4_f2"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/boom_0.png" id="5_b0"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/boom_1.png" id="6_b1"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/boom_2.png" id="7_b2"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/boom_3.png" id="8_b3"]
+[ext_resource type="Texture2D" path="res://assets/textures/vfx/skills/fireball/boom_4.png" id="9_b4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fire"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f2")
+}],
+"loop": 1,
+"name": &"fly",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_b0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_b1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_b3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b4")
+}],
+"loop": 0,
+"name": &"explosion",
+"speed": 14.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5t4xt"]
+radius = 15.0
+
+[node name="Fireball" type="Area2D" unique_id=2122729975]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_p4cjx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1558834906]
+sprite_frames = SubResource("SpriteFrames_fire")
+animation = &"fly"
+autoplay = "fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277565152]
+shape = SubResource("CircleShape2D_5t4xt")

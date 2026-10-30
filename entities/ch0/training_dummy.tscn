@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://c4tq2v15jod3s"]
+
+[ext_resource type="Texture2D" uid="uid://cyu68yfte1xpo" path="res://assets/textures/characters/shared/bkxy/sprite/idle_001.png" id="1_7y3qt"]
+[ext_resource type="Script" uid="uid://e1nwuowcwjsm" path="res://entities/ch0/training_dummy.gd" id="1_antm5"]
+[ext_resource type="Resource" uid="uid://cdm7jelyb1r84" path="res://data/entities/ch0/training_dummy.tres" id="2_2p4ft"]
+[ext_resource type="Texture2D" uid="uid://w8rcy3fy6j30" path="res://assets/textures/characters/shared/bkxy/sprite/idle_002.png" id="2_antm5"]
+[ext_resource type="Texture2D" uid="uid://b6merinjodb2p" path="res://assets/textures/characters/shared/bkxy/sprite/idle_003.png" id="3_2p4ft"]
+[ext_resource type="Texture2D" uid="uid://cfln8lxhj7fpi" path="res://assets/textures/characters/shared/bkxy/sprite/idle_004.png" id="4_wxv3t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5t4xt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7y3qt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_antm5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2p4ft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_wxv3t")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2yge"]
+radius = 24.0
+height = 164.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o2jte"]
+radius = 16.0
+height = 80.0
+
+[node name="TrainingDummy" type="CharacterBody2D" unique_id=1449966173]
+collision_layer = 4
+motion_mode = 1
+script = ExtResource("1_antm5")
+data = ExtResource("2_2p4ft")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=419648101]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_5t4xt")
+animation = &"idle"
+frame = 2
+frame_progress = 0.9993788
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=455288129]
+position = Vector2(16, 0)
+shape = SubResource("CapsuleShape2D_h2yge")
+
+[node name="ContactHitbox" type="Area2D" parent="." unique_id=26310215]
+collision_layer = 64
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactHitbox" unique_id=1225965818]
+position = Vector2(16, 0)
+shape = SubResource("CapsuleShape2D_o2jte")

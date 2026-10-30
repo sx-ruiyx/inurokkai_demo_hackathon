@@ -1,0 +1,92 @@
+| ch0/stage2 森林入口的初遇（关卡 Intro，只播一次）
+| 挂载：02_forest_entrance.tscn 根节点 -> Intro Script Path
+| 结构：branch0 出门初感 + 里德登场 + 石碑 -> choice
+|       branch1 靠近石碑 -> 符文 -> 汇合觉醒
+|       branch2 警惕环顾 -> 石碑自行觉醒 -> 汇合觉醒
+|       branch3 苏醒（公共幕，两路汇合）
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	whiteout 0
+	hide 0
+	bkxy 1 base
+	narrate 光芒褪去，你缓缓睁开眼，四周是遮天蔽日的古树与斑驳的光影。
+	whiteout _
+
+	bkxy surprise 「这里是……我穿越到的异世界森林？」
+	bkxy serious 「而且是没有教程、没有新手引导的那种。」
+
+	reed 2 alert
+	reed 「别发呆了，白柯行以。看看周围——我们被盯上了。」
+	bkxy 0 sad 「我们？你谁啊，一上来就『我们』？」
+	reed sigh 「里德。义务向导，临时工，不收费。」
+	reed 「记住这个名字。接下来的路，你会喊很多次。」
+
+	narrate 他说话时，树影里有细碎的摩擦声此起彼伏，又齐齐停住。
+	bkxy alert 「树林里……有东西。」
+	reed 「史莱姆。回廊里最常见的碎屑，没有脑子，只有肚子。」
+	reed 「但今天，它们格外安静。安静得不像在狩猎——像在围观。」
+
+	narrate 循着里德的视线，你注意到不远处矗立着一块散发着微光的石碑。
+	narrate 碑身爬满青苔，符文却亮得刺眼，仿佛整座森林的呼吸都来自那里。
+
+	choice
+		1: 靠近石碑查看
+			goto 1 0
+		2: 警惕地环顾四周
+			goto 2 0
+
+branch 1
+node 0
+	title 遗迹 · 石碑的低语
+	bkxy 1 serious
+	reed 0 base
+	narrate 你走近石碑。青苔之下，碑文被岁月磨得模糊，符文却仍有微光流动。
+	bkxy 「里德，你能看懂这些字吗？」
+	reed sigh 「我又不是史莱姆，怎么可能懂这玩意。」
+	reed 「不过……我劝你别念出声。有些字，念出来是会答应的。」
+	bkxy 「……你这句话本身就很像诅咒。」
+	narrate 你伸出手，指尖悬在碑面上方。符文突然加速流转，像等了很久。
+	choice
+		1: 触碰碑面
+			goto 3 0
+
+branch 2
+node 0
+	title 警戒 · 阴影中的围观
+	narrate 你压低身子，耳朵警觉地竖起，仔细捕捉风里的声音。
+	reed 1 warn 「嘘。有东西在靠近。不过……似乎没有敌意。」
+	bkxy 0 serious 「没有敌意？史莱姆的『没有敌意』长什么样？」
+	reed 「就是它们现在的样子——蹲着，看着，不动。」
+	narrate 树影婆娑间，隐约可见一只只半透明的胶质躯体，安静地伏低了身子。
+	bkxy 「它们在看……石碑？」
+	narrate 话音未落，身后的石碑骤然明亮，光芒逼得你闭上了眼。
+	reed 「……哈。不用你选了。是它先动的手。」
+	choice
+		1: 转身面对光芒
+			goto 3 0
+
+branch 3
+node 0
+	title 苏醒 · 枷锁的裂痕
+	whiteout 1
+	pause 1.0
+	bkxy _
+	reed _
+	narrate 恍惚间，一道刺眼的白光将你们吞没。
+	whiteout _
+	hide 0
+	bkxy 1 base
+	tip 你感觉到体内的某种枷锁被打破了。
+	narrate 有什么东西从很深的地方浮上来——不是知识，是更老的、属于身体的东西。
+	bkxy 「我感觉……力量变强了。」
+	reed 0 serious
+	reed 「不是力量。是『想起来』的东西，多了一点。」
+	bkxy 「……你说话能别总像在打哑谜吗？」
+	reed sigh 「等你能活着走到森林那一头，我再解释。」
+	reed 「在那之前，先学点保命的本事。史莱姆的围观点名，很快就要换成进攻了。」
+	tip 向前探索。里德会教你最基本的生存法则。
+	end

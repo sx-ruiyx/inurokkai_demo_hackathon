@@ -1,0 +1,385 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://stages/stage_controller.gd" id="sc_ctrl"]
+[ext_resource type="Script" path="res://stages/player_spawnpoint.gd" id="sc_spawn"]
+[ext_resource type="Script" path="res://stages/entity_spawner.gd" id="sc_spawner"]
+[ext_resource type="Script" path="res://stages/stage_interact.gd" id="sc_interact"]
+[ext_resource type="Script" path="res://stages/stage_goal.gd" id="sc_goal"]
+[ext_resource type="Script" path="res://stages/ch0/harvest_node.gd" id="sc_harv"]
+[ext_resource type="Script" path="res://stages/ch0/treasure_chest.gd" id="sc_chest"]
+[ext_resource type="Script" path="res://fx/day_night_overlay.gd" id="sc_dn"]
+[ext_resource type="AudioStream" path="res://assets/audio/bgm/bgm_ai_tavern_calm.ogg" id="bgm_1"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/grounds/grass.png" id="tex_gtop"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/grounds/dirt.png" id="tex_dirt"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/platforms/grass_long.png" id="tex_pl"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/platforms/grass_left.png" id="tex_pll"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/platforms/grass_right.png" id="tex_plr"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/parallax/nest_far.png" id="tex_par_f"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/parallax/nest_mid.png" id="tex_par_m"]
+[ext_resource type="Texture2D" path="res://assets/textures/tilesets/parallax/nest_near.png" id="tex_par_n"]
+[ext_resource type="PackedScene" path="res://ui/ui_layer.tscn" id="ui_layer"]
+[ext_resource type="PackedScene" path="res://entities/ch1/thorn_slime.tscn" id="enemy_0"]
+[ext_resource type="PackedScene" path="res://entities/ch0/alpha_slime.tscn" id="enemy_1"]
+[ext_resource type="PackedScene" path="res://entities/ch0/beginner_slime.tscn" id="enemy_2"]
+
+[sub_resource type="RectangleShape2D" id="shape_ground"]
+size = Vector2(4864, 128)
+
+[sub_resource type="RectangleShape2D" id="shape_wall"]
+size = Vector2(128, 1024)
+
+[sub_resource type="RectangleShape2D" id="shape_harvest"]
+size = Vector2(70, 90)
+
+[sub_resource type="RectangleShape2D" id="shape_chest"]
+size = Vector2(90, 90)
+
+[sub_resource type="RectangleShape2D" id="shape_goal"]
+size = Vector2(100, 240)
+
+[sub_resource type="RectangleShape2D" id="shape_portal"]
+size = Vector2(90, 220)
+
+[sub_resource type="RectangleShape2D" id="shape_plat0"]
+size = Vector2(256, 24)
+
+[sub_resource type="RectangleShape2D" id="shape_plat1"]
+size = Vector2(384, 24)
+
+[sub_resource type="RectangleShape2D" id="shape_plat2"]
+size = Vector2(256, 24)
+
+[sub_resource type="RectangleShape2D" id="shape_plat3"]
+size = Vector2(384, 24)
+
+[node name="04_forest_nest" type="Node2D"]
+script = ExtResource("sc_ctrl")
+limit_right = 4864
+limit_top = 256
+bgm_audio = ExtResource("bgm_1")
+
+[node name="Spawnpoint" type="Marker2D" parent="."]
+visible = false
+position = Vector2(200, 832)
+script = ExtResource("sc_spawn")
+spawn_id = "ch1_3_start"
+is_default = true
+
+[node name="SpawnBack" type="Marker2D" parent="."]
+visible = false
+position = Vector2(4520, 832)
+script = ExtResource("sc_spawn")
+spawn_id = "ch1_3_back"
+
+[node name="Parallax" type="Node2D" parent="."]
+position = Vector2(1152, 384)
+scale = Vector2(0.67, 0.67)
+
+[node name="Far" type="Parallax2D" parent="Parallax"]
+scroll_scale = Vector2(0.2, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Far"]
+texture = ExtResource("tex_par_f")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax/Far"]
+position = Vector2(0, 931.34)
+texture = ExtResource("tex_par_f")
+flip_v = true
+
+[node name="Mid" type="Parallax2D" parent="Parallax"]
+scroll_scale = Vector2(0.5, 0)
+repeat_size = Vector2(1674, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mid"]
+texture = ExtResource("tex_par_m")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax/Mid"]
+position = Vector2(0, 931.34)
+texture = ExtResource("tex_par_m")
+flip_v = true
+
+[node name="Near" type="Parallax2D" parent="Parallax"]
+scroll_scale = Vector2(0.8, 0)
+repeat_size = Vector2(1673, 0)
+repeat_times = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Near"]
+texture = ExtResource("tex_par_n")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax/Near"]
+position = Vector2(0, 931.34)
+texture = ExtResource("tex_par_n")
+flip_v = true
+
+[node name="Border" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="Border"]
+texture_repeat = 3
+position = Vector2(2432, 1000)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Border/Ground"]
+texture_repeat = 3
+position = Vector2(8, -44)
+texture = ExtResource("tex_gtop")
+region_enabled = true
+region_rect = Rect2(0, 0, 5648, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Border/Ground"]
+texture_repeat = 3
+position = Vector2(8, 44)
+texture = ExtResource("tex_dirt")
+region_enabled = true
+region_rect = Rect2(0, -24, 5648, 120)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Ground"]
+position = Vector2(0, -12)
+shape = SubResource("shape_ground")
+
+[node name="Air" type="StaticBody2D" parent="Border"]
+position = Vector2(-64, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air"]
+shape = SubResource("shape_wall")
+
+[node name="Air2" type="StaticBody2D" parent="Border"]
+position = Vector2(4928, 512)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/Air2"]
+shape = SubResource("shape_wall")
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform1" type="StaticBody2D" parent="Platforms"]
+position = Vector2(950, 880)
+
+[node name="SpriteL" type="Sprite2D" parent="Platforms/Platform1"]
+position = Vector2(-64, 0)
+texture = ExtResource("tex_pll")
+
+[node name="SpriteR" type="Sprite2D" parent="Platforms/Platform1"]
+position = Vector2(64, 0)
+texture = ExtResource("tex_plr")
+
+[node name="SpriteC" type="Sprite2D" parent="Platforms/Platform1"]
+texture_repeat = 2
+texture = ExtResource("tex_pl")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform1"]
+position = Vector2(0, 4)
+shape = SubResource("shape_plat0")
+one_way_collision = true
+
+[node name="Platform2" type="StaticBody2D" parent="Platforms"]
+position = Vector2(1800, 800)
+
+[node name="SpriteL" type="Sprite2D" parent="Platforms/Platform2"]
+position = Vector2(-128, 0)
+texture = ExtResource("tex_pll")
+
+[node name="SpriteR" type="Sprite2D" parent="Platforms/Platform2"]
+position = Vector2(128, 0)
+texture = ExtResource("tex_plr")
+
+[node name="SpriteC" type="Sprite2D" parent="Platforms/Platform2"]
+texture_repeat = 2
+texture = ExtResource("tex_pl")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform2"]
+position = Vector2(0, 4)
+shape = SubResource("shape_plat1")
+one_way_collision = true
+
+[node name="Platform3" type="StaticBody2D" parent="Platforms"]
+position = Vector2(2900, 860)
+
+[node name="SpriteL" type="Sprite2D" parent="Platforms/Platform3"]
+position = Vector2(-64, 0)
+texture = ExtResource("tex_pll")
+
+[node name="SpriteR" type="Sprite2D" parent="Platforms/Platform3"]
+position = Vector2(64, 0)
+texture = ExtResource("tex_plr")
+
+[node name="SpriteC" type="Sprite2D" parent="Platforms/Platform3"]
+texture_repeat = 2
+texture = ExtResource("tex_pl")
+region_enabled = true
+region_rect = Rect2(0, 0, 128, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform3"]
+position = Vector2(0, 4)
+shape = SubResource("shape_plat2")
+one_way_collision = true
+
+[node name="Platform4" type="StaticBody2D" parent="Platforms"]
+position = Vector2(3900, 800)
+
+[node name="SpriteL" type="Sprite2D" parent="Platforms/Platform4"]
+position = Vector2(-128, 0)
+texture = ExtResource("tex_pll")
+
+[node name="SpriteR" type="Sprite2D" parent="Platforms/Platform4"]
+position = Vector2(128, 0)
+texture = ExtResource("tex_plr")
+
+[node name="SpriteC" type="Sprite2D" parent="Platforms/Platform4"]
+texture_repeat = 2
+texture = ExtResource("tex_pl")
+region_enabled = true
+region_rect = Rect2(0, 0, 256, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms/Platform4"]
+position = Vector2(0, 4)
+shape = SubResource("shape_plat3")
+one_way_collision = true
+
+[node name="Spawner1" type="Node2D" parent="."]
+position = Vector2(1000, 780)
+script = ExtResource("sc_spawner")
+entity_scene = ExtResource("enemy_0")
+spawn_count = 2
+spawn_interval = 0.5
+spawn_radius = 110.0
+auto_spawn_on_ready = true
+
+[node name="Spawner2" type="Node2D" parent="."]
+position = Vector2(2100, 780)
+script = ExtResource("sc_spawner")
+entity_scene = ExtResource("enemy_1")
+spawn_count = 1
+spawn_interval = 0.5
+spawn_radius = 110.0
+auto_spawn_on_ready = true
+
+[node name="Spawner3" type="Node2D" parent="."]
+position = Vector2(3200, 780)
+script = ExtResource("sc_spawner")
+entity_scene = ExtResource("enemy_0")
+spawn_count = 1
+spawn_interval = 0.5
+spawn_radius = 110.0
+auto_spawn_on_ready = true
+
+[node name="Spawner4" type="Node2D" parent="."]
+position = Vector2(4000, 780)
+script = ExtResource("sc_spawner")
+entity_scene = ExtResource("enemy_2")
+spawn_count = 3
+spawn_interval = 0.5
+spawn_radius = 110.0
+auto_spawn_on_ready = true
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="StageGoal" type="Area2D" parent="Objects"]
+position = Vector2(4700, 780)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_goal")
+stage_id = "ch1_3"
+next_stage_path = "res://stages/ch1/05_forest_relic.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/StageGoal"]
+shape = SubResource("shape_goal")
+
+[node name="ReturnPortal" type="Area2D" parent="Objects"]
+position = Vector2(150, 790)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_interact")
+prompt_text = "[E] 返回上一区域"
+action_type = 2
+target_stage_path = "res://stages/ch1/03_forest_deep.tscn"
+target_spawn_id = "ch1_2_back"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/ReturnPortal"]
+shape = SubResource("shape_portal")
+
+[node name="CampStone" type="Area2D" parent="Objects"]
+position = Vector2(330, 790)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_interact")
+prompt_text = "[E] 回营地木屋"
+action_type = 2
+target_stage_path = "res://stages/ch0/01_wooden_house.tscn"
+target_spawn_id = "0_01_exit"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/CampStone"]
+shape = SubResource("shape_portal")
+
+[node name="Harvest0" type="Area2D" parent="Objects"]
+position = Vector2(800, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_harv")
+material_name = "草叶"
+quality = 1
+yield_min = 1
+yield_max = 2
+prompt_text = "[E] 采集草叶"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Harvest0"]
+shape = SubResource("shape_harvest")
+
+[node name="Harvest1" type="Area2D" parent="Objects"]
+position = Vector2(2500, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_harv")
+material_name = "青石"
+quality = 1
+is_ore = true
+yield_min = 1
+yield_max = 2
+prompt_text = "[E] 采集青石"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Harvest1"]
+shape = SubResource("shape_harvest")
+
+[node name="Harvest2" type="Area2D" parent="Objects"]
+position = Vector2(3800, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_harv")
+material_name = "木料"
+yield_min = 1
+yield_max = 2
+prompt_text = "[E] 采集木料"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Harvest2"]
+shape = SubResource("shape_harvest")
+
+[node name="Chest0" type="Area2D" parent="Objects"]
+position = Vector2(1300, 809)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("sc_chest")
+chest_id = "ch1_3_chest"
+gold_min = 30
+gold_max = 60
+material_pool = Array[String](["苔核", "青石"])
+rare_material = "血玉"
+rare_chance = 0.20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Objects/Chest0"]
+shape = SubResource("shape_chest")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("ui_layer")]
+
+[node name="DayNightModulate" type="CanvasLayer" parent="."]
+layer = 90
+script = ExtResource("sc_dn")
+
+[node name="ColorRect" type="ColorRect" parent="DayNightModulate"]
+mouse_filter = 2

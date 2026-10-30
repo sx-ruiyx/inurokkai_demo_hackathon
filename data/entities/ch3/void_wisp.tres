@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EntityData" format=3]
+
+[ext_resource type="Script" uid="uid://d1m4s3dsmsx25" path="res://data/entity_data.gd" id="1_edata"]
+
+[resource]
+script = ExtResource("1_edata")
+entity_name = "虚空游灵"
+max_hp = 170
+defense = 3
+contact_damage = 9
+knockback_multiplier = 0.4
+exp_reward = 280
+drop_gold_min = 25
+drop_gold_max = 45
+drop_materials = Array[String](["血玉", "晶髓"])
+metadata/_custom_type_script = "uid://d1m4s3dsmsx25"

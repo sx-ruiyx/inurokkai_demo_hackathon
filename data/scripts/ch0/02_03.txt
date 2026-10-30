@@ -1,0 +1,34 @@
+| ch0/stage2 森林 · 苔骨（小 Boss 战前，一次性触发）
+| 挂载：02_forest_entrance.tscn -> 苔骨竞技场入口（约 x=1800）
+| 参数：action_type=PLAY_VN, require_interact=true, prompt_text=[E] 前进, trigger_once=true
+| 伏笔回收：苔骨守着的半截石碑，纹章与 01_02_clock 取走的钟摆一致
+
+char bkxy 白柯行以
+char reed 里德
+char alpha_slime 苔骨
+
+branch 0
+node 0
+	hide 0
+	bkxy 0 base
+	reed 2 base
+	narrate 草浪在这里伏低成一条长廊。廊的尽头，坐着一团山丘般的影子。
+	whiteout 0
+	narrate 那东西比普通史莱姆大了两圈，青苔在它身上凝成碑文化的纹路，随着呼吸明灭。
+	whiteout _
+	alpha_slime 1 base
+	bkxy alert 「那是……史莱姆？」
+	reed warn 「苔骨。回廊的碎屑堆久了，也会堆出个王来。」
+	alpha_slime angry 「……咕。」
+	bkxy 「它刚才是不是说话了？！」
+	reed 「是肚子叫。别答理，答理了就是你俩辩论。」
+
+	narrate 苔骨缓缓让开半个身子——它身后，草里埋着半截断裂的石碑。
+	narrate 碑上的纹章，与你怀中那座钟的钟摆，一模一样。
+	bkxy serious 「里德。那半截碑……和钟上的花纹，是同一个。」
+	reed 「……嗯。所以我让你取走它。现在，先让它躺平。」
+	tip 空中按 S 下坠，落地释放冲击波
+	reed 「最后一课。跳起来，按 S 砸下去。越大个的，越吃这一招。」
+	bkxy 「你早就计划好了吧？拿我当开罐器？」
+	reed sigh 「别废话了。它饿了。你也是。」
+	end

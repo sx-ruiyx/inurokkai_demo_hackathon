@@ -1,0 +1,43 @@
+| ch0/stage2 森林 · 终章（中 Boss 战后，一次性触发，Demo 收尾）
+| 挂载：02_forest_entrance.tscn -> 深处石碑（约 x=4200）
+| 参数：action_type=PLAY_VN, require_interact=false, trigger_once=true
+| 建议：由中 Boss 死亡信号激活 monitoring，避免跳过 Boss 直达石碑
+| 注意：结尾用 whiteout _ 收束，保留黑/白幕只用于切场景防闪烁
+
+char bkxy 白柯行以
+char reed 里德
+
+branch 0
+node 0
+	hide 0
+	whiteout 0
+	pause 1.0
+	narrate 吞碑者坍塌成一地碎屑。碎屑之下，完整的石碑静静立着，符文如心跳般明灭。
+	whiteout _
+	bkxy 1 base
+	reed 2 serious
+	bkxy serious 「石碑……完整了。」
+	narrate 你伸手放上碑面。这一次，没有犹豫——像做过无数次那样。
+
+	whiteout 1
+	pause 1.5
+	bkxy _
+	reed _
+
+	narrate 白光深处，幻象展开：一位黑犬徘徊在六座石碑之间。
+	narrate 五座石碑亮着。第六座闪烁将熄，而犬就坐在它面前，像在等一个迟到很久的人。
+	narrate 犬吠声响起的瞬间，你终于听懂了那句话——「该醒了。这是第六次。」
+
+	whiteout _
+	hide 0
+	bkxy 1 base
+	reed 0 serious
+	reed 「……第六回了。这一次，别再忘了。」
+	bkxy 「你……早就知道。」
+	reed sigh 「我知道的，比你想象的多一点。也就一点。」
+	reed 「门在第六座的尽头。走吧，趁符文还认得你。」
+
+	title 第一章 · 苏醒之森 · 完
+	tip Demo 终章 · 感谢试玩
+	narrate 风声停了。森林让开一条路，路的尽头，有光。
+	end
